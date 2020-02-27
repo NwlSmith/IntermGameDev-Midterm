@@ -8,17 +8,30 @@ public class CameraFollow : MonoBehaviour
     public GameObject targetGO;
     public float posSpeed = 10.0f;
     public float rotSpeed = 10.0f;
+    public float curZoomDistance;
+    public float minZoomDistance = .6f;
+    public float maxZoomDistance = 2.5f;
+    public float zoomSpeed = 100f;
     private Vector3 posOffset;
     private Vector3 rotOffset;
 
-    // Start is called before the first frame update
     void Start()
     {
         posOffset = targetGO.transform.position - transform.position;
         //rotOffset = targetGO.transform.rotation.eulerAngles - transform.rotation.eulerAngles;
     }
 
-    // Update is called once per frame
+    private void Update()
+    {
+        curZoomDistance = Vector3.Distance(targetGO.transform.position, transform.position);
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        Vector3 change = transform.forward * -scroll * zoomSpeed * Time.deltaTime;
+
+        if (Vector3.Magnitude(posOffset + change) < maxZoomDistance && Vector3.Magnitude(posOffset + change) > minZoomDistance)
+            posOffset += change;
+    }
+
     void FixedUpdate()
     {
         transform.position = Vector3.Slerp(transform.position, targetGO.transform.position - posOffset, Time.fixedDeltaTime * posSpeed);

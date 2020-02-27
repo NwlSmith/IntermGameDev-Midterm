@@ -12,49 +12,44 @@ public class MoveHand : MonoBehaviour
     public float sensitivityY = .1f;
     public bool down;
 
-    private float mouseX;
-    private float mouseY;
-    private float height = .5f;
+    protected float mouseX;
+    protected float mouseY;
+    protected float height = .5f;
 
-    private Vector3 posOffset;
-    private Vector3 targetPos;
-    private Rigidbody rb;
+    protected Vector3 targetPos;
+    protected Rigidbody rb;
 
 
-    // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        //posOffset = targetGO.transform.position - transform.position;
-
         targetPos = transform.position;
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
 
-        mouseX = -Input.GetAxis("Mouse X");
-        mouseY = -Input.GetAxis("Mouse Y");
-
-        if (Input.GetMouseButtonDown(0))
+        if (GameManager.instance.cursorLocked)
         {
-            down = true;
-            height = 0f;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            down = false;
-            height = .5f;
-        }
-        
+            mouseX = -Input.GetAxis("Mouse X");
+            mouseY = -Input.GetAxis("Mouse Y");
 
-        targetPos += new Vector3(mouseX * sensitivityX, 0, mouseY * sensitivityY);
-        targetPos = new Vector3(targetPos.x, height, targetPos.z);
-        
+            if (Input.GetMouseButtonDown(0))
+            {
+                down = true;
+                height = 0f;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                down = false;
+                height = .5f;
+            }
+
+            targetPos = new Vector3(targetPos.x + mouseX * sensitivityX, height, targetPos.z + mouseY * sensitivityY);
+        }
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         rb.MovePosition(Vector3.Slerp(transform.position, targetPos, Time.fixedDeltaTime * posSpeed));
     }
