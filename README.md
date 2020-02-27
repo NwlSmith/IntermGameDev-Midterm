@@ -5,7 +5,9 @@ Line Drawing: https://www.youtube.com/watch?v=RRJcIoYI3ZE
 
 NEXT STEPS:
 
-- Stencils
+
+
+- Stencils, if tattoo outside, bleed
 
 - Have needle move perpendicular to object
 	- need to find the point of collision -> triggers instead of colliders? didn't calculate collision
@@ -36,3 +38,5 @@ Week 2:
 - Lines perpendicular to object
 
 - Fixed Blood not expelling from collider
+
+- transition from flat to round?
