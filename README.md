@@ -5,7 +5,9 @@ Line Drawing: https://www.youtube.com/watch?v=RRJcIoYI3ZE
 
 NEXT STEPS:
 
+- Tray
 
+- Boundaries
 
 - Stencils, if tattoo outside, bleed
 
