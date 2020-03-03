@@ -5,20 +5,18 @@ using UnityEngine;
 public class MoveHandDown : MonoBehaviour
 {
     public float targetHeight;
-    public float minHeight = 1.6f;
-    public float maxHeight = 1.7f;
+    public float minHeight = 1.6f; 
+    public float maxHeight = 1.8f;
     public bool down = false;
     public float posSpeed = 10f;
-    private Rigidbody rb;
-    // Start is called before the first frame update
+    protected Rigidbody rb;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         targetHeight = maxHeight;
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
         // if mouse down, move toward center
@@ -32,6 +30,7 @@ public class MoveHandDown : MonoBehaviour
             down = false;
             targetHeight = maxHeight;
         }
+
     }
 
     void FixedUpdate()

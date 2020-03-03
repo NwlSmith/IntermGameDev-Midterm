@@ -23,11 +23,23 @@ public class MoveHandRotate : MoveHand
             mouseX = -Input.GetAxis("Mouse X");
             mouseY = -Input.GetAxis("Mouse Y");
 
-            // target moves on x axis,
-            // target rotates on x axis
-            targetPos = new Vector3(targetPos.x + mouseX * sensitivityX, targetPos.y, targetPos.z);
+            float x = targetPos.x + mouseX * sensitivityX;
 
-            targetRot = new Vector3(targetRot.x + mouseY * sensitivityY, 0, 0);
+            if (x > boundary.z)
+                x = boundary.z;
+            if (x < boundary.w)
+                x = boundary.w;
+
+            targetPos = new Vector3(x, targetPos.y, targetPos.z);
+
+            float r = targetRot.x + mouseY * sensitivityY;
+
+            if (r > boundary.x)
+                r = boundary.x;
+            if (r < boundary.y)
+                r = boundary.y;
+
+            targetRot = new Vector3(r, 0, 0);
         }
     }
 

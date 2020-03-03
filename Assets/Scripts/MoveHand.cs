@@ -12,6 +12,8 @@ public class MoveHand : MonoBehaviour
     public float sensitivityY = .1f;
     public bool down;
 
+    public Vector4 boundary; // top, bottom, right, left
+
     protected float mouseX;
     protected float mouseY;
     protected float height = .5f;
@@ -45,7 +47,21 @@ public class MoveHand : MonoBehaviour
                 height = .5f;
             }
 
-            targetPos = new Vector3(targetPos.x + mouseX * sensitivityX, height, targetPos.z + mouseY * sensitivityY);
+            float x = targetPos.x + mouseX * sensitivityX;
+
+            if (x > boundary.z)
+                x = boundary.z;
+            if (x < boundary.w)
+                x = boundary.w;
+
+            float z = targetPos.z + mouseY * sensitivityY;
+
+            if (z > boundary.x)
+                z = boundary.x;
+            if (z < boundary.y)
+                z = boundary.y;
+
+            targetPos = new Vector3(x, height, z);
         }
     }
 

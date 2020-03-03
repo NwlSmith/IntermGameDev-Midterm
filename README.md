@@ -3,9 +3,18 @@
 Tentacle modelling: https://www.youtube.com/watch?v=1Ap-5D1oRbE
 Line Drawing: https://www.youtube.com/watch?v=RRJcIoYI3ZE
 
-NEXT STEPS:
+Tattoo Gun Coil Texture: "Aluminum Alloy-Coil-Mesh" - Global Trend US
+https://www.globaltrendsus.com/product/coil-4mm/
 
-- Tray
+Tattoo Gun Grip Texture: "Metal Grip Texture Generated. Seamless Pattern" - 123rf.com
+https://www.123rf.com/photo_94419963_metal-grip-texture-generated-seamless-pattern-.html
+
+Skin Textures: "Tileable Human Skin Texture #8" - Giles Hodges
+http://seamless-pixels.blogspot.com/2012/10/tileable-human-skin-texture-8.html
+
+
+
+NEXT STEPS:
 
 - Boundaries
 
@@ -14,8 +23,6 @@ NEXT STEPS:
 - Have needle move perpendicular to object
 	- need to find the point of collision -> triggers instead of colliders? didn't calculate collision
 	- whenever rotate around, after certain amount, make new line?
-
-- Tattoo tentacle, not flat plane - connected ^
 
 - reduce buffer distance? vary with distance mouse moves?
 
@@ -42,3 +49,9 @@ Week 2:
 - Fixed Blood not expelling from collider
 
 - transition from flat to round?
+
+Week 3:
+
+- Can now draw along corners/uneven terrain 
+
+- Tray
