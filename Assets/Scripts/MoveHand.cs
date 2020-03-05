@@ -13,12 +13,12 @@ public class MoveHand : MonoBehaviour
     public bool down;
 
     public Vector4 boundary; // top, bottom, right, left
+    public Vector3 targetPos;
 
     protected float mouseX;
     protected float mouseY;
     protected float height = .5f;
 
-    protected Vector3 targetPos;
     protected Rigidbody rb;
 
 
@@ -57,7 +57,10 @@ public class MoveHand : MonoBehaviour
             float z = targetPos.z + mouseY * sensitivityY;
 
             if (z > boundary.x)
+            {
                 z = boundary.x;
+                MoveHandManager.instance.InitRound();
+            }
             if (z < boundary.y)
                 z = boundary.y;
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoveHandRotate : MoveHand
 {
-
     public Vector3 targetRot;
     public float rotSpeed = 20f;
 
@@ -37,7 +36,10 @@ public class MoveHandRotate : MoveHand
             if (r > boundary.x)
                 r = boundary.x;
             if (r < boundary.y)
+            {
                 r = boundary.y;
+                MoveHandManager.instance.InitFlat();
+            }
 
             targetRot = new Vector3(r, 0, 0);
         }

@@ -20,7 +20,7 @@ public class DrawLineRotation : DrawLine
 
     protected override Vector3 LinePosition()
     {
-        return moveHandDownRaycast.raycastHit.point + moveHandDownRaycast.raycastHit.normal * .01f;
+        return moveHandDownRaycast.raycastHit.point + moveHandDownRaycast.raycastHit.normal * .001f * (numLines % 10);
     }
 
     protected override Quaternion LineNormal()

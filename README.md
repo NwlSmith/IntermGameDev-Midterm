@@ -20,9 +20,14 @@ NEXT STEPS:
 
 - reduce buffer distance? vary with distance mouse moves?
 
-- Change transition, make it so that if you go to top of tentacle, transition to flat?
+
+STRETCH GOALS:
 
 - Shading options/different opacity? - stretch goal
+
+- Saving the tattoos you create in image
+
+- put tattoo on a texture?
 
 DONE:
 
@@ -63,3 +68,9 @@ Week 3:
 - Squid Body + Materials
 
 - Tentacle platform
+
+- FIX CLIPPING
+
+- Fadein pause screen
+
+- Change transition, made it so that if you go to top of tentacle, transitions to flat
