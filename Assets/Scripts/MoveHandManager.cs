@@ -131,7 +131,5 @@ public class MoveHandManager : MonoBehaviour
                 moveHand.targetPos = moveHand.transform.position;
             }
         }
-
     }
-
 }
