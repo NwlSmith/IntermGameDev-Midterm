@@ -16,13 +16,7 @@ http://seamless-pixels.blogspot.com/2012/10/tileable-human-skin-texture-8.html
 
 NEXT STEPS:
 
-- Boundaries
-
 - Stencils, if tattoo outside, bleed
-
-- Have needle move perpendicular to object
-	- need to find the point of collision -> triggers instead of colliders? didn't calculate collision
-	- whenever rotate around, after certain amount, make new line?
 
 - reduce buffer distance? vary with distance mouse moves?
 
@@ -55,3 +49,9 @@ Week 3:
 - Can now draw along corners/uneven terrain 
 
 - Tray
+
+- Boundaries
+
+- Toggling needle sound
+
+- Environment with textures
