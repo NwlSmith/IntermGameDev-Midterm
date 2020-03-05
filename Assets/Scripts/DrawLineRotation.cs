@@ -20,13 +20,12 @@ public class DrawLineRotation : DrawLine
 
     protected override Vector3 LinePosition()
     {
-        return transform.position;
+        return moveHandDownRaycast.raycastHit.point + moveHandDownRaycast.raycastHit.normal * .01f;
     }
 
     protected override Quaternion LineNormal()
     {
-        //return Quaternion.Euler(transform.parent.parent.rotation.eulerAngles.x + 90, 0, transform.parent.parent.rotation.eulerAngles.z);
-        return Quaternion.FromToRotation(-Vector3.forward, moveHandDownRaycast.rayCastNormal);
+        return Quaternion.FromToRotation(-Vector3.forward, moveHandDownRaycast.raycastHit.normal);
     }
 
     protected override Quaternion BloodNormal()

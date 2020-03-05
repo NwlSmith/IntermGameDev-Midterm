@@ -31,14 +31,36 @@ public class GameManager : MonoBehaviour
             {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                Time.timeScale = 1f;
+                StartCoroutine(TimeLerp(1f));
             }
             else
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                Time.timeScale = .001f;
+                StartCoroutine(TimeLerp(0f));
             }
         }
+    }
+
+    /*
+     * Lerp time to desired timescale.
+     * The timescale is smoothly reset based on:
+     * The fraction of how much time has passed since the start of the Lerp
+     * Divided by the total duration of the Lerp.
+     * Invoked by StartTime and StopTime.
+     * targetTimeScale: the target timescale that will be achieved at the end of the lerp.
+     */
+    private IEnumerator TimeLerp(float targetTimeScale)
+    {
+        float duration = .75f;
+        float elapsedTime = 0f;
+        float startTimeScale = Time.timeScale;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            Time.timeScale = Mathf.SmoothStep(startTimeScale, targetTimeScale, (elapsedTime / duration));
+            yield return null;
+        }
+        Time.timeScale = targetTimeScale;
     }
 }

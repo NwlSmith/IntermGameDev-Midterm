@@ -20,6 +20,8 @@ NEXT STEPS:
 
 - reduce buffer distance? vary with distance mouse moves?
 
+- Change transition, make it so that if you go to top of tentacle, transition to flat?
+
 - Shading options/different opacity? - stretch goal
 
 DONE:
@@ -55,3 +57,7 @@ Week 3:
 - Toggling needle sound
 
 - Environment with textures
+
+- Get ink position from raycast
+
+- Squid Body + Materials
