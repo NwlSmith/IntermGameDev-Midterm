@@ -1,4 +1,6 @@
 # IntermGameDev-Midterm
+
+BUILD IN /ZippedBuilds/wk3.zip
  
 Tentacle modelling: https://www.youtube.com/watch?v=1Ap-5D1oRbE
 Line Drawing: https://www.youtube.com/watch?v=RRJcIoYI3ZE
@@ -11,6 +13,9 @@ https://www.123rf.com/photo_94419963_metal-grip-texture-generated-seamless-patte
 
 Skin Textures: "Tileable Human Skin Texture #8" - Giles Hodges
 http://seamless-pixels.blogspot.com/2012/10/tileable-human-skin-texture-8.html
+
+Font: Ironhorse
+https://www.fontspace.com/the-fontry/iron-family
 
 
 
