@@ -35,12 +35,6 @@ public class MoveHandDown : MonoBehaviour
 
     void FixedUpdate()
     {
-
         transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0, targetHeight, 0), Time.fixedDeltaTime * posSpeed);
-        
-        // Moveposition is not working correctly
-        //Vector3 moveTo = Vector3.Lerp(transform.localPosition, new Vector3(0, targetHeight - minHeight, 0), Time.fixedDeltaTime * posSpeed);
-        //Debug.Log("moveTo = " + moveTo + " moveTo Transformed: "+ transform.TransformPoint(moveTo));
-        //rb.MovePosition(moveTo);
     }
 }

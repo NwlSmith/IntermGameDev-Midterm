@@ -90,7 +90,10 @@ public class DrawLine : MonoBehaviour
     private void GenerateBlood(Vector3 newNeedlePos)
     {
         if (Random.Range(0, bloodLikelyhood) <= 1)
+        {
             Instantiate(bloodParticle, BloodPos(), BloodNormal());
+            AudioManager.instance.BloodSound();
+        }
     }
 
 
