@@ -30,7 +30,7 @@ public class MoveHandDownRaycast : MoveHandDown
         }
 
         // if mouse down, move toward center
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !GameManager.instance.screenshotText.enabled)
         {
             down = true;
             targetHeight = minHeightAdjusted;

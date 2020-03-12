@@ -31,7 +31,7 @@ public class MoveHand : MonoBehaviour
     protected virtual void Update()
     {
 
-        if (GameManager.instance.cursorLocked)
+        if (GameManager.instance.cursorLocked && !GameManager.instance.screenshotText.enabled)
         {
             mouseX = -Input.GetAxis("Mouse X");
             mouseY = -Input.GetAxis("Mouse Y");

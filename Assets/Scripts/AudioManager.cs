@@ -85,7 +85,7 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && GameManager.instance.pauseText.enabled == false)
+        if (Input.GetMouseButtonDown(0) && GameManager.instance.pauseText.enabled == false && !GameManager.instance.screenshotText.enabled)
         {
             tattooGunAS.volume = tattooGunVol;
             ambientPainAS.volume = ambientPainVol;

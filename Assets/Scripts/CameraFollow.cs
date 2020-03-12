@@ -18,7 +18,7 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         posOffset = targetGO.transform.position - transform.position;
-        //rotOffset = targetGO.transform.rotation.eulerAngles - transform.rotation.eulerAngles;
+        rotOffset = transform.rotation.eulerAngles;
     }
 
     private void Update()
@@ -35,6 +35,6 @@ public class CameraFollow : MonoBehaviour
     void FixedUpdate()
     {
         transform.position = Vector3.Slerp(transform.position, targetGO.transform.position - posOffset, Time.fixedDeltaTime * posSpeed);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, targetGO.transform.rotation, Time.fixedDeltaTime * rotSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(rotOffset), Time.fixedDeltaTime * rotSpeed);
     }
 }

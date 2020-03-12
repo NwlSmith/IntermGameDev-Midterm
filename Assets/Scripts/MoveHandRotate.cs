@@ -16,7 +16,7 @@ public class MoveHandRotate : MoveHand
 
     protected override void Update()
     {
-        if (GameManager.instance.cursorLocked)
+        if (GameManager.instance.cursorLocked && !GameManager.instance.screenshotText.enabled)
         {
             // Collect input
             mouseX = -Input.GetAxis("Mouse X");

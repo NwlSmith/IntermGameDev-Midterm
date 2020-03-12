@@ -36,7 +36,7 @@ public class MoveHandManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.pauseText.enabled)
+        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.pauseText.enabled && !GameManager.instance.screenshotText.enabled)
         {
             if (round)
             {

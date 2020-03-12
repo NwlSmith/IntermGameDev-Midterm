@@ -1,9 +1,13 @@
 # IntermGameDev-Midterm
 
 BUILD IN /ZippedBuilds/wk3.zip
- 
+
+### Tutorials
+
 Tentacle modelling: https://www.youtube.com/watch?v=1Ap-5D1oRbE
 Line Drawing: https://www.youtube.com/watch?v=RRJcIoYI3ZE
+
+### Textures
 
 Tattoo Gun Coil Texture: "Aluminum Alloy-Coil-Mesh" - Global Trend US
 https://www.globaltrendsus.com/product/coil-4mm/
@@ -14,10 +18,27 @@ https://www.123rf.com/photo_94419963_metal-grip-texture-generated-seamless-patte
 Skin Textures: "Tileable Human Skin Texture #8" - Giles Hodges
 http://seamless-pixels.blogspot.com/2012/10/tileable-human-skin-texture-8.html
 
+Spider Web: InnovationGames
+https://www.innovationgames.com/spider-web/
+
+Hatchet: Pixabay
+https://pixabay.com/vectors/hatchet-ax-axe-carpenter-tool-148474/
+
+Guillotine: Guillotine, history, the death penalty icon
+https://www.iconfinder.com/icons/4740475/guillotine_history_the_death_penalty_icon
+
+Arrow: Fancy Arrow PNG Images, Free Transparent Image Download - Pngix
+https://dlpng.com/png/5982722
+
+Camera: Camera, canon, film camera, nikon, photo camera, photography, slr icon
+https://www.iconfinder.com/icons/2627069/camera_canon_film_camera_nikon_photo_camera_photography_slr_icon
+
+### Fonts
+
 Font: Ironhorse
 https://www.fontspace.com/the-fontry/iron-family
 
-Audio:
+### Audio:
 Comical Screams: Mafon2
 https://freesound.org/people/Mafon2/sounds/343490/
 
@@ -39,14 +60,14 @@ https://freesound.org/people/drummy/sounds/458894/
 Water Bubbles: Stephen Saldan
 https://freesound.org/people/StephenSaldanha/sounds/121895/
 
-Under The Sea Beat: 2nick8
-https://www.looperman.com/loops/detail/131020/2nick8-under-the-sea-beat-60bpm-chill-out-drum-loop
-
 Detuned TR 505 Beat 1: LoopPilot
 https://www.looperman.com/loops/detail/137271/detuned-tr-505-beat-1-90bpm-chill-out-drum-loop
 
 Chill At The Beach Drums: Reboy
 https://www.looperman.com/loops/detail/144506/chill-at-the-beach-drums-90bpm-chill-out-drum-loop
+
+Ugly God Chill Synth: PetertheMarkou
+https://www.looperman.com/loops/detail/109084/ugly-god-chill-synth-by-peterthemarkou-free-90bpm-chill-out-synth-loop
 
 
 
@@ -58,6 +79,8 @@ NEXT STEPS:
 
 
 STRETCH GOALS:
+
+- Screenshot and next from buttons
 
 - Shading options/different opacity? - stretch goal
 
@@ -116,4 +139,10 @@ Week 3:
 Week 4:
 
 - Added AudioManager with main sounds, music, blood gushing sound
+
+- Added synth to music
+
+- Added screenshot, need to test
+
+- Added tattoo stencil minigame
 
