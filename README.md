@@ -1,6 +1,13 @@
 # IntermGameDev-Midterm
 
-BUILD IN /ZippedBuilds/wk3.zip
+Nate Smith
+
+2/20/2020-3/23/2020
+
+Intermediate Game Development Midterm Project
+
+
+BUILD IN /ZippedBuilds/
 
 ### Tutorials
 
@@ -73,20 +80,21 @@ https://www.looperman.com/loops/detail/109084/ugly-god-chill-synth-by-peterthema
 
 NEXT STEPS:
 
-- Stencils, if tattoo outside, bleed
+- 1 more stencil
 
-- reduce buffer distance? vary with distance mouse moves?
+- Is it easy enough to win/see the objective?
 
+- level transitions
 
 STRETCH GOALS:
 
-- Screenshot and next from buttons
+- Screenshot and next from BUTTONS
+
+- Intro sequence?
+
+- Dynamic music?
 
 - Shading options/different opacity? - stretch goal
-
-- Saving the tattoos you create in image
-
-- save tattoo on a texture?
 
 - Make robot hand?
 
@@ -130,7 +138,7 @@ Week 3:
 
 - Tentacle platform
 
-- FIX CLIPPING
+- FIXED CLIPPING
 
 - Fadein pause screen
 
@@ -146,3 +154,8 @@ Week 4:
 
 - Added tattoo stencil minigame
 
+- Fix problem with corners of ink 
+
+- Fixed problems with movehand transition
+
+- Fully commented code.

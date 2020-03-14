@@ -1,11 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+ * Date created: 3/10/2020
+ * Creator: Nate Smith
+ * 
+ * Description: The Audio Manager Class.
+ * Is a single instance static object - There should only be 1 AudioManager.
+ * Controls music, sound effects, ambient sounds.
+ */
 public class AudioManager : MonoBehaviour
 {
+    // Static instance of the object.
     public static AudioManager instance = null;
 
+    // Public objects.
     public AudioClip tattooGun;
     public AudioClip ambientPain;
     public AudioClip[] pain;
@@ -13,6 +22,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip splash;
     public AudioClip music;
 
+    // Starting volumes for each sound effect.
     [Range(0.0f, 1.0f)]
     public float tattooGunVol = .7f;
     [Range(0.0f, 1.0f)]
@@ -26,6 +36,7 @@ public class AudioManager : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float musicVol = 1f;
 
+    // Private AudioSources.
     private AudioSource tattooGunAS;
     private AudioSource ambientPainAS;
     private AudioSource painAS;
@@ -35,10 +46,13 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
+        // Ensure that there is only one instance of the AudioManager.
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+
+        // Set up each AudioSource and their starting properties.
 
         tattooGunAS = gameObject.AddComponent<AudioSource>();
         tattooGunAS.playOnAwake = false;
@@ -70,6 +84,7 @@ public class AudioManager : MonoBehaviour
         musicAS.loop = true;
         musicAS.volume = musicVol;
 
+        // Assign clips and play.
         tattooGunAS.clip = tattooGun;
         tattooGunAS.Play();
 
@@ -82,14 +97,17 @@ public class AudioManager : MonoBehaviour
         musicAS.Play();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && GameManager.instance.pauseText.enabled == false && !GameManager.instance.screenshotText.enabled)
+        // If the player clicks while the game is not paused or showing finished product, play tattoo sounds
+        if (Input.GetMouseButtonDown(0) &&
+            GameManager.instance.pauseText.enabled == false &&
+            !GameManager.instance.screenshotText.enabled)
         {
             tattooGunAS.volume = tattooGunVol;
             ambientPainAS.volume = ambientPainVol;
         }
+        // Otherwise, turn off sounds.
         else if (Input.GetMouseButtonUp(0))
         {
             tattooGunAS.volume = 0f;
@@ -97,6 +115,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /*
+     * Play random bleeding and pain sounds.
+     * Invoked in GenerateBlood() in DrawLine.cs
+     */
     public void BloodSound()
     {
         painAS.clip = pain[Random.Range(0, pain.Length)];

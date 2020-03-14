@@ -1,18 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+ * Date created: 3/11/2020
+ * Creator: Nate Smith
+ * 
+ * Description: The Stencil manager class.
+ * Manages the operation of the stencil, collects StencilColliders, and detects when the stencil is complete.
+ */
 public class Stencil : MonoBehaviour
 {
-
-    /*
-     * detect colliders in children
-     * add them to list
-     * if tattoo gun collides with colliders, remove from list
-     * check if all colliders are removed,
-     * if yes, you win or something
-     */
-
+    // Public Variables.
     public List<StencilCollider> colliders;
     public List<StencilCollider> usedColliders;
     public int initCount;
@@ -25,6 +23,11 @@ public class Stencil : MonoBehaviour
         initCount = colliders.Count;
     }
 
+    /*
+     * Deactivate the given StencilCollider, update text, and determine if the stencil is complete.
+     * Called in OnTriggerEnter() in StencilCollider.cs.
+     * stencilCollider: The StencilCollider to be deactivated.
+     */
     public void RemoveStencilCollider(StencilCollider stencilCollider)
     {
         usedColliders.Add(stencilCollider);

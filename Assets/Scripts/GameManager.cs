@@ -2,11 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/*
+ * Date created: 2/25/2020
+ * Creator: Nate Smith
+ * 
+ * Description: The GameManager class.
+ * Is a single instance static object - There should only be 1 GameManager.
+ * Handles pausing, text, camera targetting, and scene transitions.
+ */
 public class GameManager : MonoBehaviour
 {
+    // Static instance of the object.
     public static GameManager instance = null;
 
+    // Public Variables.
     public bool cursorLocked = true;
 
     public bool cameraTransition = false;
@@ -21,18 +30,22 @@ public class GameManager : MonoBehaviour
 
     public GameObject nextCameraTarget;
 
+    // Private Variables.
     private MoveHandRotate moveHandRotate;
 
     private void Start()
     {
+        // Ensure that there is only one instance of the GameManager.
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
 
+        // Lock the cursor and make invisible.
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
+        // Disable the text UI and white fade UI.
         pauseText.enabled = false;
         pauseImg.color = new Color(1f, 1f, 1f, 0f);
 
@@ -40,13 +53,13 @@ public class GameManager : MonoBehaviour
         screenshotText.enabled = false;
     }
 
-
-    // Update is called once per frame
     void Update()
     {
+        // If the player presses the pause key, toggle the pause mode.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             cursorLocked = !cursorLocked;
+            // Lock the cursor, restart time, get rid of the pause UI.
             if (cursorLocked)
             {
                 Cursor.visible = false;
@@ -55,6 +68,7 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, 0f)));
                 pauseText.enabled = false;
             }
+            // Unlock the cursor, stop time, enable the pause UI.
             else
             {
                 Cursor.visible = true;
@@ -65,10 +79,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // If the finish game text prompt is enabled, check for the key press.
         if (finishedText.enabled)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
+                // Disable the normal UI and send the Camera to the display tattoo position.
                 progressText.enabled = false;
                 finishedText.enabled = false;
                 Camera.main.GetComponent<CameraFollow>().enabled = false;
@@ -76,10 +92,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // If the screenshot text prompt is enabled, check for the key press.
         if (screenshotText.enabled)
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
+                // Disable the finishedText UI, take a screenshot, and restart the game.
                 screenshotText.enabled = false;
                 GetComponent<Screenshot>().takeHiResShot = true;
                 moveHandRotate = FindObjectOfType<MoveHandRotate>();
@@ -89,11 +107,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /*
+     * Update the ProgressText to current percentage
+     * Called in RemoveStencilCollider() in Stencil.cs.
+     * curCount: current number of active StencilColliders.
+     * totalCount: total number of active and inactive StencilColliders.
+     */
     public void UpdateProgressText(int curCount, int totalCount)
     {
         progressText.text = " " + Mathf.Round((totalCount - curCount) * 100f / totalCount) + "% finished";
     }
 
+    /*
+     * Remove the finishedText and retarget the camera to the assigned position.
+     * Called in RemoveStencilCollider() in Stencil.cs.
+     * newCameraTarget: The Stencil's camera target transform the camera should Lerp to.
+     */
     public void StencilFinished(GameObject newCameraTarget)
     {
         finishedText.enabled = true;
@@ -163,6 +192,11 @@ public class GameManager : MonoBehaviour
         screenshotText.enabled = true;
     }
 
+    /*
+     * Wait a frame then restart the game.
+     * Called so that the screenshot will not be obstructed by the tattooing arm.
+     * Called in Update().
+     */
     private IEnumerator RestartGame()
     {
         yield return null;

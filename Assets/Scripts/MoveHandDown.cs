@@ -1,7 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+ * Date created: 2/25/2020
+ * Creator: Nate Smith
+ * 
+ * Description: The Draw Line class for moving up and down in horizontal spaces.
+ * DEPRECATED.
+ */
 public class MoveHandDown : MonoBehaviour
 {
     public float targetHeight;

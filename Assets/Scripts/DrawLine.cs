@@ -1,9 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+ * Date created: 2/20/2020
+ * Creator: Nate Smith
+ * 
+ * Description: The Draw Line class.
+ * Draws line of ink of the chosen width and color.
+ * Works on flat surfaces.
+ */
 public class DrawLine : MonoBehaviour
 {
+    // Public Variables.
     public Material curInk;
     public float curWidth = .05f;
     public float bufferVal;
@@ -14,12 +22,16 @@ public class DrawLine : MonoBehaviour
     public GameObject lineHolder;
     public MeshRenderer[] needleMeshes;
 
+    // Protected Variable.
     protected GameObject curLine;
+
+    // Private Variables.
     private LineRenderer lR;
     private List<Vector3> needlePos = new List<Vector3>();
 
     private void OnTriggerEnter(Collider other)
     {
+        // If the InkProjector GameObject collider enters an object with the "Skin" tag, draw a line.
         if (other.gameObject.tag == "Skin")
         {
             CreateLine();
@@ -29,8 +41,10 @@ public class DrawLine : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        // Check that the InkProjector GameObject is still colliding with the Skin. 
         if (other.gameObject.tag == "Skin")
         {
+            // If the InkProjector has moved a distance more than the buffer value, add to the line.
             Vector3 tempNeedlePos = LinePosition();
             if (Vector3.Distance(tempNeedlePos, needlePos[needlePos.Count - 1]) > bufferVal)
             {
@@ -39,6 +53,11 @@ public class DrawLine : MonoBehaviour
         }
     }
 
+    /*
+     * Instantiate a new line.
+     * Lines will be created at the position of the InkProjector facing the normal direction of the surface.
+     * Called in OnTriggerEnter().
+     */
     protected void CreateLine()
     {
         curLine = Instantiate(line, Vector3.zero, LineNormal());
@@ -48,9 +67,8 @@ public class DrawLine : MonoBehaviour
 
         lR.material = curInk;
         lR.startWidth = curWidth;
-        //lR.endWidth = curWidth;
 
-        // replace this with needle position
+        // Two positions are added to the LineRenderer so that single dots can be rendered.
         needlePos.Add(LinePosition());
         needlePos.Add(LinePosition());
 
@@ -58,6 +76,10 @@ public class DrawLine : MonoBehaviour
         lR.SetPosition(1, needlePos[1]);
     }
 
+    /*
+     * Extend the current line, generate blood if necessary.
+     * Called in OnTriggerStay().
+     */
     protected virtual void UpdateLine(Vector3 newNeedlePos)
     {
         needlePos.Add(newNeedlePos);
@@ -67,26 +89,30 @@ public class DrawLine : MonoBehaviour
         GenerateBlood(newNeedlePos);
     }
 
+    /*
+     * Calculate the position of the line.
+     * Lines will be created slightly above the current surface.
+     * Called in CreateLine() and OnTriggerStay().
+     */
     protected virtual Vector3 LinePosition()
     {
         return new Vector3(transform.position.x, -.59f + numLines / 10000, transform.position.z);
     }
 
+    /*
+     * Calculate the normal vector of the line.
+     * Lines will face upwards in the Y-direction.
+     * Called in CreateLine().
+     */
     protected virtual Quaternion LineNormal()
     {
         return Quaternion.Euler(90, 0, 0);
     }
 
-    protected virtual Quaternion BloodNormal()
-    {
-        return Quaternion.identity;
-    }
-
-    protected virtual Vector3 BloodPos()
-    {
-        return LinePosition();
-    }
-
+    /*
+     * Randomly instantiate blood particles.
+     * Called in GenerateBlood().
+     */
     private void GenerateBlood(Vector3 newNeedlePos)
     {
         if (Random.Range(0, bloodLikelyhood) <= 1)
@@ -96,5 +122,23 @@ public class DrawLine : MonoBehaviour
         }
     }
 
+    /*
+     * Calculate the position vector of the blood particles.
+     * Lines will be at the same position of the current line.
+     * Called in GenerateBlood().
+     */
+    protected virtual Vector3 BloodPos()
+    {
+        return LinePosition();
+    }
 
+    /*
+     * Calculate the normal vector of the blood particles.
+     * Lines will face upwards in the Y-direction.
+     * Called in GenerateBlood().
+     */
+    protected virtual Quaternion BloodNormal()
+    {
+        return Quaternion.identity;
+    }
 }
