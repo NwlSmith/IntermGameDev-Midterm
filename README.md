@@ -1,5 +1,3 @@
-# IntermGameDev-Midterm
-
 # I N K
 
 Nate Smith
@@ -95,9 +93,9 @@ STRETCH GOALS:
 
 - Make robot hand?
 
-### Changelog:
+## Changelog:
 
-## Week 1:
+### Week 1:
 
 - Destroy blood particles after a time
 
@@ -107,7 +105,7 @@ STRETCH GOALS:
 
 - zooming with mouse wheel
 
-## Week 2:
+### Week 2:
 
 - Tattoo on round object, Machine rotates around capsule, moves out perpendicular
 
@@ -117,7 +115,7 @@ STRETCH GOALS:
 
 - transition from flat to round?
 
-## Week 3:
+### Week 3:
 
 - Can now draw along corners/uneven terrain 
 
@@ -141,7 +139,7 @@ STRETCH GOALS:
 
 - Change transition, made it so that if you go to top of tentacle, transitions to flat
 
-## Week 4:
+### Week 4:
 
 - Added AudioManager with main sounds, music, blood gushing sound
 
