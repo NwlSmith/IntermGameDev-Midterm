@@ -6,7 +6,7 @@ using UnityEngine;
  * Creator: Nate Smith
  * 
  * Description: The Ink Chooser class.
- * Assigns the given inkMaterial to the tattoo gun on collisions.
+ * Assigns the given inkMaterial to the tattoo machine on collisions.
  */
 public class InkChooser : MonoBehaviour
 {

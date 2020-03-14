@@ -95,13 +95,17 @@ public class AudioManager : MonoBehaviour
 
         musicAS.clip = music;
         musicAS.Play();
+
+        // AudioManager should be retained between scenes.
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
     {
         // If the player clicks while the game is not paused or showing finished product, play tattoo sounds
-        if (Input.GetMouseButtonDown(0) &&
-            GameManager.instance.pauseText.enabled == false &&
+        if (!GameManager.instance.levelTransition &&
+            Input.GetMouseButtonDown(0) &&
+            !GameManager.instance.pauseText.enabled &&
             !GameManager.instance.screenshotText.enabled)
         {
             tattooGunAS.volume = tattooGunVol;

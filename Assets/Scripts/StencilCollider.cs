@@ -13,6 +13,12 @@ public class StencilCollider : MonoBehaviour
     // Public Variables.
     public bool active = true;
 
+    private void OnEnable()
+    {
+        if (GetComponent<MeshRenderer>())
+            GetComponent<MeshRenderer>().enabled = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // If the InkProjector GameObject enters this trigger, and it is active.
@@ -24,6 +30,8 @@ public class StencilCollider : MonoBehaviour
                 active = false;
                 // Debug.Log(name + " was activated");
                 GetComponentInParent<Stencil>().RemoveStencilCollider(this);
+                if (GetComponent<MeshRenderer>())
+                    GetComponent<MeshRenderer>().enabled = false;
             }
         }
     }

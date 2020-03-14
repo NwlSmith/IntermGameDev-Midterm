@@ -7,7 +7,7 @@ using UnityEngine;
  * 
  * Description: The Camera Follow Class.
  * Controls movement of the camera,
- * following the tattoo gun, zooming in and out, and displaying final tattoo.
+ * following the tattoo machine, zooming in and out, and displaying final tattoo.
  */
 public class CameraFollow : MonoBehaviour
 {

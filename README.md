@@ -1,10 +1,12 @@
 # IntermGameDev-Midterm
 
+# I N K
+
 Nate Smith
 
 2/20/2020-3/23/2020
 
-Intermediate Game Development Midterm Project
+Intermediate Game Development Midterm
 
 
 BUILD IN /ZippedBuilds/
@@ -16,10 +18,10 @@ Line Drawing: https://www.youtube.com/watch?v=RRJcIoYI3ZE
 
 ### Textures
 
-Tattoo Gun Coil Texture: "Aluminum Alloy-Coil-Mesh" - Global Trend US
+Tattoo Machine Coil Texture: "Aluminum Alloy-Coil-Mesh" - Global Trend US
 https://www.globaltrendsus.com/product/coil-4mm/
 
-Tattoo Gun Grip Texture: "Metal Grip Texture Generated. Seamless Pattern" - 123rf.com
+Tattoo Machine Grip Texture: "Metal Grip Texture Generated. Seamless Pattern" - 123rf.com
 https://www.123rf.com/photo_94419963_metal-grip-texture-generated-seamless-pattern-.html
 
 Skin Textures: "Tileable Human Skin Texture #8" - Giles Hodges
@@ -31,8 +33,8 @@ https://www.innovationgames.com/spider-web/
 Hatchet: Pixabay
 https://pixabay.com/vectors/hatchet-ax-axe-carpenter-tool-148474/
 
-Guillotine: Guillotine, history, the death penalty icon
-https://www.iconfinder.com/icons/4740475/guillotine_history_the_death_penalty_icon
+Guillotine: Guillotine
+https://freesvg.org/guillotine
 
 Arrow: Fancy Arrow PNG Images, Free Transparent Image Download - Pngix
 https://dlpng.com/png/5982722
@@ -76,15 +78,10 @@ https://www.looperman.com/loops/detail/144506/chill-at-the-beach-drums-90bpm-chi
 Ugly God Chill Synth: PetertheMarkou
 https://www.looperman.com/loops/detail/109084/ugly-god-chill-synth-by-peterthemarkou-free-90bpm-chill-out-synth-loop
 
-158-160, 175-177
 
 NEXT STEPS:
 
-- 1 more stencil
-
-- Is it easy enough to win/see the objective?
-
-- level transitions
+- Intro to game, quit button
 
 STRETCH GOALS:
 
@@ -98,9 +95,9 @@ STRETCH GOALS:
 
 - Make robot hand?
 
-DONE:
+### Changelog:
 
-Week 1:
+## Week 1:
 
 - Destroy blood particles after a time
 
@@ -110,9 +107,9 @@ Week 1:
 
 - zooming with mouse wheel
 
-Week 2:
+## Week 2:
 
-- Tattoo on round object, gun rotates around capsule, moves out perpendicular
+- Tattoo on round object, Machine rotates around capsule, moves out perpendicular
 
 - Lines perpendicular to object
 
@@ -120,7 +117,7 @@ Week 2:
 
 - transition from flat to round?
 
-Week 3:
+## Week 3:
 
 - Can now draw along corners/uneven terrain 
 
@@ -144,7 +141,7 @@ Week 3:
 
 - Change transition, made it so that if you go to top of tentacle, transitions to flat
 
-Week 4:
+## Week 4:
 
 - Added AudioManager with main sounds, music, blood gushing sound
 
@@ -158,4 +155,8 @@ Week 4:
 
 - Fixed problems with movehand transition
 
-- Fully commented code.
+- Fully commented code
+
+- 4 stencils
+
+- Level transitions

@@ -16,7 +16,10 @@ public class Stencil : MonoBehaviour
     public int initCount;
     public GameObject cameraPos;
 
-    void Start()
+    public bool showMats = false;
+    public Material showMat;
+
+    void OnEnable()
     {
         colliders = new List<StencilCollider>(GetComponentsInChildren<StencilCollider>());
         usedColliders = new List<StencilCollider>();
@@ -33,7 +36,15 @@ public class Stencil : MonoBehaviour
         usedColliders.Add(stencilCollider);
         colliders.Remove(stencilCollider);
         GameManager.instance.UpdateProgressText(colliders.Count, initCount);
-        if (colliders.Count / initCount <= .1f)
+        if ((float)colliders.Count / initCount <= .2f && !showMats)
+        {
+            showMats = true;
+            foreach (StencilCollider sc in colliders)
+            {
+                sc.GetComponent<MeshRenderer>().enabled = true;
+            }
+        }
+        if ((float)colliders.Count / initCount <= .1f)
         {
             GetComponent<MeshRenderer>().enabled = false;
             GameManager.instance.StencilFinished(cameraPos);

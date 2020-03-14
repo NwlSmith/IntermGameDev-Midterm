@@ -24,7 +24,7 @@ public class MoveHandRotate : MoveHand
     protected override void Update()
     {
         // Take input while the game is not paused or suspended.
-        if (GameManager.instance.cursorLocked && !GameManager.instance.screenshotText.enabled)
+        if (!GameManager.instance.levelTransition && GameManager.instance.cursorLocked && !GameManager.instance.screenshotText.enabled)
         {
             // Collect input.
             mouseX = -Input.GetAxis("Mouse X");
@@ -48,7 +48,7 @@ public class MoveHandRotate : MoveHand
             if (r < boundary.y)
             {
                 r = boundary.y;
-                // If the gun has rotated past a certain point, transition to horizontal-plane movement.
+                // If the machine has rotated past a certain point, transition to horizontal-plane movement.
                 MoveHandManager.instance.InitFlat();
             }
 

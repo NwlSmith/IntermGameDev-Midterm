@@ -31,7 +31,7 @@ public class MoveHandDownRaycast : MoveHandDown
         Ray curHeight = new Ray(transform.position, transform.up * -transform.localPosition.y);
         Debug.DrawRay(transform.position, transform.up * -transform.localPosition.y, Color.blue);
 
-        // Adjust the raised and lowered heights of the gun based off the distance from the body being rotated around.
+        // Adjust the raised and lowered heights of the machine based off the distance from the body being rotated around.
         if (Physics.Raycast(transform.position, -transform.up, out raycastHit, transform.localPosition.y, 1<<0, QueryTriggerInteraction.Ignore))
         {
             minHeightAdjusted = transform.localPosition.y - raycastHit.distance + minHeight - drawLine.transform.localPosition.y;
@@ -39,7 +39,7 @@ public class MoveHandDownRaycast : MoveHandDown
         }
 
         // While the mouse is clicked, and the game is not paused, move toward lowered position
-        if (Input.GetMouseButton(0) && !GameManager.instance.screenshotText.enabled)
+        if (!GameManager.instance.levelTransition && Input.GetMouseButton(0) && !GameManager.instance.screenshotText.enabled)
         {
             down = true;
             targetHeight = minHeightAdjusted;

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     // Public Variables.
     public bool cursorLocked = true;
 
-    public bool cameraTransition = false;
+    public bool levelTransition = false;
 
     public Text pauseText;
     public Image pauseImg;
@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     public float pauseLerpDuration = .75f;
 
     public GameObject nextCameraTarget;
+
+    public Level1To2 level1To2;
+    public Level2Transitions level2Transitions;
 
     // Private Variables.
     private MoveHandRotate moveHandRotate;
@@ -47,16 +50,22 @@ public class GameManager : MonoBehaviour
 
         // Disable the text UI and white fade UI.
         pauseText.enabled = false;
-        pauseImg.color = new Color(1f, 1f, 1f, 0f);
+        pauseImg.color = new Color(1f, 1f, 1f, 1f);
+        StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, 0f), 1.5f));
 
         finishedText.enabled = false;
         screenshotText.enabled = false;
+
+        moveHandRotate = FindObjectOfType<MoveHandRotate>();
     }
 
     void Update()
     {
+        // REMOVE THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            Next();
         // If the player presses the pause key, toggle the pause mode.
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!levelTransition && Input.GetKeyDown(KeyCode.Escape))
         {
             cursorLocked = !cursorLocked;
             // Lock the cursor, restart time, get rid of the pause UI.
@@ -65,7 +74,7 @@ public class GameManager : MonoBehaviour
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 StartCoroutine(TimeLerp(1f));
-                StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, 0f)));
+                StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, 0f), .75f));
                 pauseText.enabled = false;
             }
             // Unlock the cursor, stop time, enable the pause UI.
@@ -74,13 +83,13 @@ public class GameManager : MonoBehaviour
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 StartCoroutine(TimeLerp(0f));
-                StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, .4f)));
+                StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, .4f), .75f));
                 pauseText.enabled = true;
             }
         }
 
         // If the finish game text prompt is enabled, check for the key press.
-        if (finishedText.enabled)
+        if (!levelTransition && finishedText.enabled)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -88,22 +97,42 @@ public class GameManager : MonoBehaviour
                 progressText.enabled = false;
                 finishedText.enabled = false;
                 Camera.main.GetComponent<CameraFollow>().enabled = false;
+                moveHandRotate.gameObject.SetActive(false);
                 StartCoroutine(LerpCameraToPos(nextCameraTarget));
             }
         }
 
         // If the screenshot text prompt is enabled, check for the key press.
-        if (screenshotText.enabled)
+        if (!levelTransition && screenshotText.enabled)
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
                 // Disable the finishedText UI, take a screenshot, and restart the game.
                 screenshotText.enabled = false;
                 GetComponent<Screenshot>().takeHiResShot = true;
-                moveHandRotate = FindObjectOfType<MoveHandRotate>();
-                moveHandRotate.gameObject.SetActive(false);
-                StartCoroutine(RestartGame());
+                Debug.Log("Calling Next()");
+                Next();
             }
+        }
+    }
+
+    /*
+     * Transition to the next level/section.
+     * Called in Update(), or from a button press.
+     */
+    public void Next()
+    {
+        Debug.Log("called Next()");
+        if (!level1To2)
+        {
+            StartCoroutine(level2Transitions.NextStencil());
+            // implement Level Manager for level 2
+            Debug.Log("RestartingGame()");
+        }
+        else
+        {
+            Debug.Log("going to Level2()");
+            level1To2.Level2();
         }
     }
 
@@ -160,9 +189,8 @@ public class GameManager : MonoBehaviour
      * Invoked by Update.
      * targetTimeScale: the target timescale that will be achieved at the end of the lerp.
      */
-    private IEnumerator FadeLerp(Color targetColor)
+    public IEnumerator FadeLerp(Color targetColor, float duration)
     {
-        float duration = .75f;
         float elapsedTime = 0f;
         float startTimeScale = Time.timeScale;
         while (elapsedTime < duration)
@@ -197,7 +225,7 @@ public class GameManager : MonoBehaviour
      * Called so that the screenshot will not be obstructed by the tattooing arm.
      * Called in Update().
      */
-    private IEnumerator RestartGame()
+    public IEnumerator RestartGame()
     {
         yield return null;
         Camera.main.GetComponent<CameraFollow>().enabled = true;

@@ -6,7 +6,7 @@ using UnityEngine;
  * Creator: Nate Smith
  * 
  * Description: The Width chooser class.
- * Assigns the given width to the tattoo gun on collisions, and updates the needle models.
+ * Assigns the given width to the tattoo machine on collisions, and updates the needle models.
  */
 public class WidthChooser : MonoBehaviour
 {
