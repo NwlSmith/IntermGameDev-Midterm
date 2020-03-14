@@ -22,7 +22,7 @@ public class StencilCollider : MonoBehaviour
             {
                 // Deactivate, and inform the manager class.
                 active = false;
-                Debug.Log(name + " was activated");
+                // Debug.Log(name + " was activated");
                 GetComponentInParent<Stencil>().RemoveStencilCollider(this);
             }
         }

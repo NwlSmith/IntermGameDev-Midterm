@@ -76,7 +76,7 @@ https://www.looperman.com/loops/detail/144506/chill-at-the-beach-drums-90bpm-chi
 Ugly God Chill Synth: PetertheMarkou
 https://www.looperman.com/loops/detail/109084/ugly-god-chill-synth-by-peterthemarkou-free-90bpm-chill-out-synth-loop
 
-
+158-160, 175-177
 
 NEXT STEPS:
 

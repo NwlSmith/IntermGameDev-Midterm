@@ -33,9 +33,8 @@ public class Stencil : MonoBehaviour
         usedColliders.Add(stencilCollider);
         colliders.Remove(stencilCollider);
         GameManager.instance.UpdateProgressText(colliders.Count, initCount);
-        if (colliders.Count <= 0)
+        if (colliders.Count / initCount <= .1f)
         {
-            Debug.Log("All Stencils Cleared");
             GetComponent<MeshRenderer>().enabled = false;
             GameManager.instance.StencilFinished(cameraPos);
         }
