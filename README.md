@@ -88,8 +88,6 @@ https://freesound.org/people/paep3nguin/sounds/388046/
 
 NEXT STEPS:
 
-- Intro to game, quit button
-
 - split up music?
 
 STRETCH GOALS:
@@ -171,3 +169,5 @@ STRETCH GOALS:
 - Intro sequence
 
 - Button sounds
+
+- Adjusted post-processing

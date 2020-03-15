@@ -40,13 +40,14 @@ public class IntroSequence : MonoBehaviour
         // Fade in from white.
         float elapsedTime = 0f;
         Color startColor = fadeImg.color;
+        Color targetColor = new Color(1f, 1f, 1f, 0f);
         while (elapsedTime < duration)
         {
             elapsedTime += Time.unscaledDeltaTime;
-            fadeImg.color = Color.Lerp(startColor, transparent, (elapsedTime / duration));
+            fadeImg.color = Color.Lerp(startColor, targetColor, (elapsedTime / duration));
             yield return null;
         }
-        fadeImg.color = transparent;
+        fadeImg.color = targetColor;
 
         foreach (Vector3 targetRot in rotationTargets)
         {
@@ -64,7 +65,7 @@ public class IntroSequence : MonoBehaviour
             yield return new WaitForSeconds(.5f);
         }
 
-        // Fade to half white.
+        // Fade to white.
         elapsedTime = 0f;
         startColor = fadeImg.color;
         while (elapsedTime < duration)
