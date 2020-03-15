@@ -40,7 +40,7 @@ public class MoveHand : MonoBehaviour
     protected virtual void Update()
     {
         // If the cursor is locked and the player has not finished their tattoo, allow movement.
-        if (!GameManager.instance.levelTransition && GameManager.instance.cursorLocked && !GameManager.instance.screenshotText.enabled)
+        if (!GameManager.instance.levelTransition && GameManager.instance.cursorLocked && !GameManager.instance.screenshotButton.gameObject.activeSelf)
         {
             // Retrieve Input.
             mouseX = -Input.GetAxis("Mouse X");

@@ -15,6 +15,7 @@ public class Level2Transitions : MonoBehaviour
     public Image pauseImg;
     public int curStencil = 0;
     public float whiteFadeDuration = 2f;
+    public GameObject finishedCameraPos;
 
     void Start()
     {
@@ -24,8 +25,7 @@ public class Level2Transitions : MonoBehaviour
 
     /*
      * Transition the next stencil.
-     * Fades to white, enable the 
-     * Reenable the progress text
+     * Fades to white, enables the next stencil, reenables the progress text, then fades the white out.
      * Called in Next() in GameManager.cs.
      */
     public IEnumerator NextStencil()
@@ -35,11 +35,11 @@ public class Level2Transitions : MonoBehaviour
 
         // Fade to white.
         float elapsedTime = 0f;
-        float startTimeScale = Time.timeScale;
+        Color startColor = pauseImg.color;
         while (elapsedTime < whiteFadeDuration)
         {
             elapsedTime += Time.unscaledDeltaTime;
-            pauseImg.color = Color.Lerp(pauseImg.color, Color.white, (elapsedTime / whiteFadeDuration));
+            pauseImg.color = Color.Lerp(startColor, Color.white, (elapsedTime / whiteFadeDuration));
             yield return null;
         }
         pauseImg.color = Color.white;
@@ -54,23 +54,32 @@ public class Level2Transitions : MonoBehaviour
             gm.progressText.enabled = true;
             gm.UpdateProgressText(1, 1);
             StartCoroutine(gm.RestartGame());
+            // hide screenshot and next buttons
         }
         // If that was the last stencil, end the game.
         else
         {
-            // IMPLEMENT ENDGAME
+            gm.nextButton.gameObject.SetActive(false);
+            StartCoroutine(gm.LerpCameraToPos(finishedCameraPos));
+            // Display screenshot and Endgame buttons
+            gm.exitButton.gameObject.SetActive(true);
+            gm.screenshotButton.gameObject.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         // Fade to transparent.
         elapsedTime = 0f;
-        startTimeScale = Time.timeScale;
+        startColor = pauseImg.color;
         Color target = new Color(1f, 1f, 1f, 0f);
         while (elapsedTime < whiteFadeDuration)
         {
             elapsedTime += Time.unscaledDeltaTime;
-            pauseImg.color = Color.Lerp(pauseImg.color, target, (elapsedTime / whiteFadeDuration));
+            pauseImg.color = Color.Lerp(startColor, target, (elapsedTime / whiteFadeDuration));
             yield return null;
         }
         pauseImg.color = target;
     }
+
+
 }

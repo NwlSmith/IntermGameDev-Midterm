@@ -24,7 +24,9 @@ public class GameManager : MonoBehaviour
     public Image pauseImg;
     public Text progressText;
     public Text finishedText;
-    public Text screenshotText;
+    public Button screenshotButton;
+    public Button nextButton;
+    public Button exitButton;
 
     public float pauseLerpDuration = .75f;
 
@@ -54,16 +56,16 @@ public class GameManager : MonoBehaviour
         StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, 0f), 1.5f));
 
         finishedText.enabled = false;
-        screenshotText.enabled = false;
+        screenshotButton.gameObject.SetActive(false);
+        nextButton.gameObject.SetActive(false);
+        exitButton.gameObject.SetActive(false);
+
 
         moveHandRotate = FindObjectOfType<MoveHandRotate>();
     }
 
     void Update()
     {
-        // REMOVE THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            Next();
         // If the player presses the pause key, toggle the pause mode.
         if (!levelTransition && Input.GetKeyDown(KeyCode.Escape))
         {
@@ -76,6 +78,7 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(TimeLerp(1f));
                 StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, 0f), .75f));
                 pauseText.enabled = false;
+                exitButton.gameObject.SetActive(false);
             }
             // Unlock the cursor, stop time, enable the pause UI.
             else
@@ -85,6 +88,7 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(TimeLerp(0f));
                 StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, .4f), .75f));
                 pauseText.enabled = true;
+                exitButton.gameObject.SetActive(true);
             }
         }
 
@@ -96,24 +100,25 @@ public class GameManager : MonoBehaviour
                 // Disable the normal UI and send the Camera to the display tattoo position.
                 progressText.enabled = false;
                 finishedText.enabled = false;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 Camera.main.GetComponent<CameraFollow>().enabled = false;
                 moveHandRotate.gameObject.SetActive(false);
                 StartCoroutine(LerpCameraToPos(nextCameraTarget));
+                AudioManager.instance.PlayFinishedSound();
             }
         }
+    }
 
-        // If the screenshot text prompt is enabled, check for the key press.
-        if (!levelTransition && screenshotText.enabled)
-        {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                // Disable the finishedText UI, take a screenshot, and restart the game.
-                screenshotText.enabled = false;
-                GetComponent<Screenshot>().takeHiResShot = true;
-                Debug.Log("Calling Next()");
-                Next();
-            }
-        }
+    public void Screenshot()
+    {
+        // Disable the finishedText UI, take a screenshot, and restart the game.
+        GetComponent<Screenshot>().takeHiResShot = true;
+        // The last screenshot should quit the game.
+        if (!level1To2 && (level2Transitions && level2Transitions.curStencil >= level2Transitions.stencils.Length))
+            EndGame();
+        else
+            Next();
     }
 
     /*
@@ -122,18 +127,24 @@ public class GameManager : MonoBehaviour
      */
     public void Next()
     {
-        Debug.Log("called Next()");
+        screenshotButton.gameObject.SetActive(false);
+        nextButton.gameObject.SetActive(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         if (!level1To2)
         {
             StartCoroutine(level2Transitions.NextStencil());
-            // implement Level Manager for level 2
-            Debug.Log("RestartingGame()");
         }
         else
         {
-            Debug.Log("going to Level2()");
             level1To2.Level2();
         }
+    }
+
+    public void EndGame()
+    {
+        Debug.Log("Quitting...");
+        Application.Quit();
     }
 
     /*
@@ -144,7 +155,7 @@ public class GameManager : MonoBehaviour
      */
     public void UpdateProgressText(int curCount, int totalCount)
     {
-        progressText.text = " " + Mathf.Round((totalCount - curCount) * 100f / totalCount) + "% finished";
+        progressText.text = "   " + Mathf.Round((totalCount - curCount) * 100f / totalCount) + "% finished";
     }
 
     /*
@@ -192,7 +203,6 @@ public class GameManager : MonoBehaviour
     public IEnumerator FadeLerp(Color targetColor, float duration)
     {
         float elapsedTime = 0f;
-        float startTimeScale = Time.timeScale;
         while (elapsedTime < duration)
         {
             elapsedTime += Time.unscaledDeltaTime;
@@ -202,7 +212,15 @@ public class GameManager : MonoBehaviour
         pauseImg.color = targetColor;
     }
 
-    private IEnumerator LerpCameraToPos(GameObject cameraPos)
+    /*
+     * Lerp the camera to the given GameObject.
+     * The image is smoothly moved in based on:
+     * The fraction of how much time has passed since the start of the Lerp
+     * Divided by the total duration of the Lerp.
+     * Invoked by NextStencil() in Level2Transitions.cs and Update().
+     * targetTimeScale: the target timescale that will be achieved at the end of the lerp.
+     */
+    public IEnumerator LerpCameraToPos(GameObject cameraPos)
     {
         float duration = .75f;
         float elapsedTime = 0f;
@@ -217,7 +235,13 @@ public class GameManager : MonoBehaviour
         }
         Camera.main.transform.position = cameraPos.transform.position;
         Camera.main.transform.rotation = cameraPos.transform.rotation;
-        screenshotText.enabled = true;
+
+        //Screenshot and "next" buttons should appear only if this is not the end of the game.
+        if (level1To2 || (level2Transitions && level2Transitions.curStencil < level2Transitions.stencils.Length))
+        {
+            screenshotButton.gameObject.SetActive(true);
+            nextButton.gameObject.SetActive(true);
+        }
     }
 
     /*

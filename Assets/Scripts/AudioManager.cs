@@ -14,6 +14,8 @@ public class AudioManager : MonoBehaviour
     // Static instance of the object.
     public static AudioManager instance = null;
 
+    public bool introSequence = false;
+
     // Public objects.
     public AudioClip tattooGun;
     public AudioClip ambientPain;
@@ -21,6 +23,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] gush;
     public AudioClip splash;
     public AudioClip music;
+    public AudioClip button;
+    public AudioClip finished;
 
     // Starting volumes for each sound effect.
     [Range(0.0f, 1.0f)]
@@ -43,6 +47,8 @@ public class AudioManager : MonoBehaviour
     private AudioSource gushAS;
     private AudioSource splashAS;
     private AudioSource musicAS;
+    private AudioSource buttonAS;
+    private AudioSource finishedAS;
 
     void Start()
     {
@@ -84,6 +90,14 @@ public class AudioManager : MonoBehaviour
         musicAS.loop = true;
         musicAS.volume = musicVol;
 
+        buttonAS = gameObject.AddComponent<AudioSource>();
+        buttonAS.playOnAwake = false;
+        buttonAS.loop = false;
+
+        finishedAS = gameObject.AddComponent<AudioSource>();
+        finishedAS.playOnAwake = false;
+        finishedAS.loop = false;
+
         // Assign clips and play.
         tattooGunAS.clip = tattooGun;
         tattooGunAS.Play();
@@ -96,26 +110,32 @@ public class AudioManager : MonoBehaviour
         musicAS.clip = music;
         musicAS.Play();
 
+        buttonAS.clip = button;
+        finishedAS.clip = finished;
+
         // AudioManager should be retained between scenes.
         DontDestroyOnLoad(gameObject);
     }
 
     void Update()
     {
-        // If the player clicks while the game is not paused or showing finished product, play tattoo sounds
-        if (!GameManager.instance.levelTransition &&
-            Input.GetMouseButtonDown(0) &&
-            !GameManager.instance.pauseText.enabled &&
-            !GameManager.instance.screenshotText.enabled)
+        if (!introSequence)
         {
-            tattooGunAS.volume = tattooGunVol;
-            ambientPainAS.volume = ambientPainVol;
-        }
-        // Otherwise, turn off sounds.
-        else if (Input.GetMouseButtonUp(0))
-        {
-            tattooGunAS.volume = 0f;
-            ambientPainAS.volume = 0f;
+            // If the player clicks while the game is not paused or showing finished product, play tattoo sounds
+            if (!GameManager.instance.levelTransition &&
+                Input.GetMouseButtonDown(0) &&
+                !GameManager.instance.pauseText.enabled &&
+                !GameManager.instance.screenshotButton.enabled)
+            {
+                tattooGunAS.volume = tattooGunVol;
+                ambientPainAS.volume = ambientPainVol;
+            }
+            // Otherwise, turn off sounds.
+            else if (Input.GetMouseButtonUp(0))
+            {
+                tattooGunAS.volume = 0f;
+                ambientPainAS.volume = 0f;
+            }
         }
     }
 
@@ -130,5 +150,15 @@ public class AudioManager : MonoBehaviour
 
         gushAS.clip = gush[Random.Range(0, gush.Length)];
         gushAS.Play();
+    }
+
+    public void PlayButtonSound()
+    {
+        buttonAS.Play();
+    }
+
+    public void PlayFinishedSound()
+    {
+        finishedAS.Play();
     }
 }

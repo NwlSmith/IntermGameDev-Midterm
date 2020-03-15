@@ -34,8 +34,11 @@ https://pixabay.com/vectors/hatchet-ax-axe-carpenter-tool-148474/
 Guillotine: Guillotine
 https://freesvg.org/guillotine
 
-Arrow: Fancy Arrow PNG Images, Free Transparent Image Download - Pngix
-https://dlpng.com/png/5982722
+Arrow: Infinity transparent arrow tattoo
+https://ya-webdesign.com/explore/infinity-transparent-arrow-tattoo/
+
+Crossed Arrows: Crossed arrows transparent
+https://www.pinterest.com/pin/329607266474313275/ / http://toundra.es/
 
 Camera: Camera, canon, film camera, nikon, photo camera, photography, slr icon
 https://www.iconfinder.com/icons/2627069/camera_canon_film_camera_nikon_photo_camera_photography_slr_icon
@@ -76,20 +79,24 @@ https://www.looperman.com/loops/detail/144506/chill-at-the-beach-drums-90bpm-chi
 Ugly God Chill Synth: PetertheMarkou
 https://www.looperman.com/loops/detail/109084/ugly-god-chill-synth-by-peterthemarkou-free-90bpm-chill-out-synth-loop
 
+Button press sound: InspectorJ
+https://freesound.org/people/InspectorJ/sounds/403005/
+
+Beep up: paep3nguin
+https://freesound.org/people/paep3nguin/sounds/388046/
+
 
 NEXT STEPS:
 
 - Intro to game, quit button
 
+- split up music?
+
 STRETCH GOALS:
 
-- Screenshot and next from BUTTONS
+- Lighting?
 
-- Intro sequence?
-
-- Dynamic music?
-
-- Shading options/different opacity? - stretch goal
+- UI fade in + out?
 
 - Make robot hand?
 
@@ -113,7 +120,7 @@ STRETCH GOALS:
 
 - Fixed Blood not expelling from collider
 
-- transition from flat to round?
+- transition from flat to round
 
 ### Week 3:
 
@@ -158,3 +165,9 @@ STRETCH GOALS:
 - 4 stencils
 
 - Level transitions
+
+- Screenshot, next, and quit from buttons
+
+- Intro sequence
+
+- Button sounds

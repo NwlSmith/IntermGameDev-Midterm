@@ -24,7 +24,7 @@ public class MoveHandRotate : MoveHand
     protected override void Update()
     {
         // Take input while the game is not paused or suspended.
-        if (!GameManager.instance.levelTransition && GameManager.instance.cursorLocked && !GameManager.instance.screenshotText.enabled)
+        if (!GameManager.instance.levelTransition && GameManager.instance.cursorLocked && !GameManager.instance.screenshotButton.gameObject.activeSelf)
         {
             // Collect input.
             mouseX = -Input.GetAxis("Mouse X");

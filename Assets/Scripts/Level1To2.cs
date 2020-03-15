@@ -35,11 +35,11 @@ public class Level1To2 : MonoBehaviour
         Debug.Log("transitioning");
         float duration = 1.25f;
         float elapsedTime = 0f;
-        float startTimeScale = Time.timeScale;
+        Color startColor = pauseImg.color;
         while (elapsedTime < duration)
         {
             elapsedTime += Time.unscaledDeltaTime;
-            pauseImg.color = Color.Lerp(pauseImg.color, Color.white, (elapsedTime / duration));
+            pauseImg.color = Color.Lerp(startColor, Color.white, (elapsedTime / duration));
             yield return null;
         }
         pauseImg.color = Color.white;
