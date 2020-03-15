@@ -92,8 +92,6 @@ NEXT STEPS:
 
 STRETCH GOALS:
 
-- Lighting?
-
 - UI fade in + out?
 
 - Make robot hand?
