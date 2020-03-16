@@ -7,7 +7,7 @@ Nate Smith
 Intermediate Game Development Midterm
 
 
-BUILD IN /ZippedBuilds/
+BUILD LOCATED IN /ZippedBuilds/
 
 ### Tutorials
 
@@ -40,13 +40,21 @@ https://ya-webdesign.com/explore/infinity-transparent-arrow-tattoo/
 Crossed Arrows: Crossed arrows transparent
 https://www.pinterest.com/pin/329607266474313275/ / http://toundra.es/
 
-Camera: Camera, canon, film camera, nikon, photo camera, photography, slr icon
-https://www.iconfinder.com/icons/2627069/camera_canon_film_camera_nikon_photo_camera_photography_slr_icon
+Camera icon: Camera by B Barrett from the Noun Project
+https://thenounproject.com/term/camera/54601/
+
+Cursor: Cultures Tattoo Machine Icon
+http://www.iconarchive.com/show/windows-8-icons-by-icons8/Cultures-Tattoo-Machine-icon.html
+
+Unpause Icon: Triskele Symbol spiral
+https://www.carrollsirishgifts.com/blog/the-history-and-meaning-behind-the-celtic-triskele-symbol/
+
 
 ### Fonts
 
 Font: Ironhorse
 https://www.fontspace.com/the-fontry/iron-family
+
 
 ### Audio:
 Comical Screams: Mafon2
@@ -67,9 +75,6 @@ https://freesound.org/people/cliftonmcarlson/sounds/345985/
 Spash: drummy
 https://freesound.org/people/drummy/sounds/458894/
 
-Water Bubbles: Stephen Saldan
-https://freesound.org/people/StephenSaldanha/sounds/121895/
-
 Detuned TR 505 Beat 1: LoopPilot
 https://www.looperman.com/loops/detail/137271/detuned-tr-505-beat-1-90bpm-chill-out-drum-loop
 
@@ -78,6 +83,12 @@ https://www.looperman.com/loops/detail/144506/chill-at-the-beach-drums-90bpm-chi
 
 Ugly God Chill Synth: PetertheMarkou
 https://www.looperman.com/loops/detail/109084/ugly-god-chill-synth-by-peterthemarkou-free-90bpm-chill-out-synth-loop
+
+Ugly God Chill Loop: PetertheMarkou
+https://www.looperman.com/loops/detail/132242/ugly-god-chill-loop-140bpm-chill-out-synth-loop
+
+Stuck in the Elevator: 4DT
+https://www.looperman.com/loops/detail/139035/stuck-in-the-elevator-120bpm-chill-out-synth-loop
 
 Button press sound: InspectorJ
 https://freesound.org/people/InspectorJ/sounds/403005/
@@ -88,7 +99,7 @@ https://freesound.org/people/paep3nguin/sounds/388046/
 
 NEXT STEPS:
 
-- split up music?
+- stencil clip with ink
 
 STRETCH GOALS:
 
@@ -169,3 +180,5 @@ STRETCH GOALS:
 - Button sounds
 
 - Adjusted post-processing
+
+- Inks now appear on needles

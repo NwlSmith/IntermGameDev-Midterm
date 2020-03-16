@@ -22,6 +22,12 @@ public class InkChooser : MonoBehaviour
         if (otherDL)
         {
             otherDL.curInk = inkMaterial;
+            foreach (MeshRenderer mr in otherDL.needleMeshes)
+            {
+                Material[] mrs = mr.materials;
+                mrs[1] = inkMaterial;
+                mr.materials = mrs;
+            }
         }
     }
 }

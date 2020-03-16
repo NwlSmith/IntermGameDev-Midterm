@@ -27,10 +27,13 @@ public class GameManager : MonoBehaviour
     public Button screenshotButton;
     public Button nextButton;
     public Button exitButton;
+    public Button unpauseButton;
 
     public float pauseLerpDuration = .75f;
 
     public GameObject nextCameraTarget;
+
+    public Stencil curStencil;
 
     public Level1To2 level1To2;
     public Level2Transitions level2Transitions;
@@ -59,6 +62,7 @@ public class GameManager : MonoBehaviour
         screenshotButton.gameObject.SetActive(false);
         nextButton.gameObject.SetActive(false);
         exitButton.gameObject.SetActive(false);
+        unpauseButton.gameObject.SetActive(false);
 
 
         moveHandRotate = FindObjectOfType<MoveHandRotate>();
@@ -73,22 +77,12 @@ public class GameManager : MonoBehaviour
             // Lock the cursor, restart time, get rid of the pause UI.
             if (cursorLocked)
             {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                StartCoroutine(TimeLerp(1f));
-                StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, 0f), .75f));
-                pauseText.enabled = false;
-                exitButton.gameObject.SetActive(false);
+                Unpause();
             }
             // Unlock the cursor, stop time, enable the pause UI.
             else
             {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                StartCoroutine(TimeLerp(0f));
-                StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, .4f), .75f));
-                pauseText.enabled = true;
-                exitButton.gameObject.SetActive(true);
+                Pause();
             }
         }
 
@@ -105,11 +99,17 @@ public class GameManager : MonoBehaviour
                 Camera.main.GetComponent<CameraFollow>().enabled = false;
                 moveHandRotate.gameObject.SetActive(false);
                 StartCoroutine(LerpCameraToPos(nextCameraTarget));
+                StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, .4f), .75f));
                 AudioManager.instance.PlayFinishedSound();
+                curStencil.GetComponent<MeshRenderer>().enabled = false;
             }
         }
     }
 
+    /*
+     * Take a screenshot, then transition to the next level/section.
+     * Called in Update(), or from a button press.
+     */
     public void Screenshot()
     {
         // Disable the finishedText UI, take a screenshot, and restart the game.
@@ -141,6 +141,44 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /*
+     * Unpauses the game.
+     * Locks the cursor, fades out to normal, restarts time, and disables pause UI
+     * Called by pressing in 'escape' Update() OR the Unpause button.
+     */
+    public void Unpause()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        cursorLocked = true;
+        StartCoroutine(TimeLerp(1f));
+        StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, 0f), .75f));
+        pauseText.enabled = false;
+        exitButton.gameObject.SetActive(false);
+        unpauseButton.gameObject.SetActive(false);
+    }
+
+    /*
+     * Pauses the game.
+     * unlocks the cursor, fades the screen to white, stops time, and enables pause UI
+     * Called by pressing in 'escape' Update().
+     */
+    public void Pause()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        cursorLocked = false;
+        StartCoroutine(TimeLerp(0f));
+        StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, .4f), .75f));
+        pauseText.enabled = true;
+        exitButton.gameObject.SetActive(true);
+        unpauseButton.gameObject.SetActive(true);
+    }
+
+    /*
+     * Exits the game.
+     * Called by button on IntroSequence.
+     */
     public void EndGame()
     {
         Debug.Log("Quitting...");

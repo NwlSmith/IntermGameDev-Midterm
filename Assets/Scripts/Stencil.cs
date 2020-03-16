@@ -46,7 +46,6 @@ public class Stencil : MonoBehaviour
         }
         if ((float)colliders.Count / initCount <= .1f)
         {
-            GetComponent<MeshRenderer>().enabled = false;
             GameManager.instance.StencilFinished(cameraPos);
         }
     }

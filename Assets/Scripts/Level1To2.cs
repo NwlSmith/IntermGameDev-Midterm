@@ -24,6 +24,7 @@ public class Level1To2 : MonoBehaviour
         GameManager.instance.levelTransition = true;
         pauseImg = GameManager.instance.pauseImg;
         StartCoroutine(Transition());
+        AudioManager.instance.TransitionTrack();
     }
 
     /*
@@ -32,7 +33,6 @@ public class Level1To2 : MonoBehaviour
      */
     private IEnumerator Transition()
     {
-        Debug.Log("transitioning");
         float duration = 1.25f;
         float elapsedTime = 0f;
         Color startColor = pauseImg.color;
@@ -43,7 +43,6 @@ public class Level1To2 : MonoBehaviour
             yield return null;
         }
         pauseImg.color = Color.white;
-        Debug.Log("transitioned");
         SceneManager.LoadScene("Level 2", LoadSceneMode.Single);
     }
 }

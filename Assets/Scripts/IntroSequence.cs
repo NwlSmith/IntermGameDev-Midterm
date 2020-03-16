@@ -17,6 +17,10 @@ public class IntroSequence : MonoBehaviour
     public Text nameText;
     public Text buttonText;
     public Image buttonImg;
+    public Text exitText;
+    public Image exitImg;
+    public Text websiteText;
+    public Image websiteImg;
     public Image fadeImg;
     public Vector3[] rotationTargets;
     public Color transparent = new Color(0f, 0f, 0f, 0f);
@@ -30,9 +34,18 @@ public class IntroSequence : MonoBehaviour
         nameText.color = transparent;
         buttonText.color = transparent;
         buttonImg.color = transparent;
-        fadeImg.color = fullColor;
+        exitText.color = transparent;
+        exitImg.color = transparent;
+        websiteText.color = transparent;
+        websiteImg.color = transparent;
+
+    fadeImg.color = fullColor;
     }
 
+    /*
+     * Intro sequence.
+     * Called in Start().
+     */
     private IEnumerator Sequence()
     {
         GameObject cameraGO = Camera.main.gameObject;
@@ -108,10 +121,18 @@ public class IntroSequence : MonoBehaviour
             float t = elapsedTime / (duration / 2);
             buttonText.color = Color.Lerp(startColor, fullColor, t);
             buttonImg.color = Color.Lerp(startColorButton, fullColor, t);
+            exitText.color = Color.Lerp(startColor, fullColor, t);
+            exitImg.color = Color.Lerp(startColorButton, fullColor, t);
+            websiteText.color = Color.Lerp(startColor, fullColor, t);
+            websiteImg.color = Color.Lerp(startColorButton, fullColor, t);
             yield return null;
         }
         buttonText.color = fullColor;
         buttonImg.color = fullColor;
+        exitText.color = fullColor;
+        exitImg.color = fullColor;
+        websiteText.color = fullColor;
+        websiteImg.color = fullColor;
     }
 
     /*
@@ -121,10 +142,15 @@ public class IntroSequence : MonoBehaviour
      */
     public void StartGame()
     {
-        Debug.Log("Clicked");
+        AudioManager.instance.TransitionTrack();
         StartCoroutine(StartGameCO());
     }
 
+    /*
+     * Coroutine that initiates the game.
+     * Fades to white, fades out buttons, and loads next scene.
+     * Called by StartGame().
+     */
     private IEnumerator StartGameCO()
     {
         // Fade to white and fade out buttons.
@@ -139,10 +165,18 @@ public class IntroSequence : MonoBehaviour
             float t = elapsedTime / (duration / 4);
             buttonText.color = Color.Lerp(startColor, transparent, t);
             buttonImg.color = Color.Lerp(startColorButton, transparent, t);
+            exitText.color = Color.Lerp(startColor, transparent, t);
+            exitImg.color = Color.Lerp(startColorButton, transparent, t);
+            websiteText.color = Color.Lerp(startColor, transparent, t);
+            websiteImg.color = Color.Lerp(startColorButton, transparent, t);
             yield return null;
         }
         buttonText.color = transparent;
         buttonImg.color = transparent;
+        exitText.color = transparent;
+        exitImg.color = transparent;
+        websiteText.color = transparent;
+        websiteImg.color = transparent;
 
         // Fade name out.
         elapsedTime = 0f;
@@ -167,5 +201,24 @@ public class IntroSequence : MonoBehaviour
         titleText.color = transparent;
 
         SceneManager.LoadScene("Level 1", LoadSceneMode.Single);
+    }
+
+    /*
+     * Exits the game.
+     * Called by button on IntroSequence.
+     */
+    public void EndGame()
+    {
+        Debug.Log("Quitting...");
+        Application.Quit();
+    }
+
+    /*
+     * Forwards the user to portfolio website.
+     * Called by button on IntroSequence.
+     */
+    public void Website()
+    {
+        Application.OpenURL("http://www.nwlsmith.com");
     }
 }

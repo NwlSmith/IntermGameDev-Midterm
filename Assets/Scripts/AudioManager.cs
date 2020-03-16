@@ -16,13 +16,15 @@ public class AudioManager : MonoBehaviour
 
     public bool introSequence = false;
 
+    public int loopNum = 0;
+
     // Public objects.
     public AudioClip tattooGun;
     public AudioClip ambientPain;
     public AudioClip[] pain;
     public AudioClip[] gush;
     public AudioClip splash;
-    public AudioClip music;
+    public AudioClip[] loops;
     public AudioClip button;
     public AudioClip finished;
 
@@ -107,7 +109,7 @@ public class AudioManager : MonoBehaviour
 
         splashAS.clip = splash;
 
-        musicAS.clip = music;
+        musicAS.clip = loops[0];
         musicAS.Play();
 
         buttonAS.clip = button;
@@ -119,24 +121,79 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
-        if (!introSequence)
+        // If the player stops clicking, the tattoo gun should never make noise.
+        if (Input.GetMouseButtonUp(0))
         {
-            // If the player clicks while the game is not paused or showing finished product, play tattoo sounds
-            if (!GameManager.instance.levelTransition &&
-                Input.GetMouseButtonDown(0) &&
-                !GameManager.instance.pauseText.enabled &&
-                !GameManager.instance.screenshotButton.enabled)
-            {
-                tattooGunAS.volume = tattooGunVol;
-                ambientPainAS.volume = ambientPainVol;
-            }
-            // Otherwise, turn off sounds.
-            else if (Input.GetMouseButtonUp(0))
-            {
-                tattooGunAS.volume = 0f;
-                ambientPainAS.volume = 0f;
-            }
+            tattooGunAS.volume = 0f;
+            ambientPainAS.volume = 0f;
         }
+    }
+
+    /*
+     * Plays the next loop in the AudioClip array when the current loop is over.
+     * Invoked in the Level1to2 class in () and Level2Transitions() when transitioning between stencils.
+     */
+    public void TransitionTrack()
+    {
+        //musicAS.loop = false;
+        loopNum++;
+        loopNum = Mathf.Min(loopNum, loops.Length - 1);
+        //StartCoroutine(NextTrack());
+        ExpNextTrack();
+    }
+
+    private void ExpNextTrack()
+    {
+        float time = musicAS.time;
+        musicAS.clip = loops[loopNum];
+        musicAS.time = time;
+        musicAS.Play();
+    }
+
+    /*
+     * Wait until the current synth loop is finished and play the queued synth.
+     * Invoked TransitionTrack(). 
+     */
+    private IEnumerator NextTrack()
+    {
+        // Fade music out.
+        float duration = .5f;
+        float elapsedTime = 0f;
+        float startVol = musicAS.volume;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            musicAS.volume = Mathf.SmoothStep(startVol, 0f, elapsedTime / duration);
+            yield return null;
+        }
+        musicAS.volume = 0f;
+
+        // Switch the track.
+        float time = musicAS.time;
+        musicAS.clip = loops[loopNum];
+        musicAS.time = time;
+        musicAS.Play();
+
+        // Fade music back in.
+        elapsedTime = .5f;
+        startVol = musicAS.volume;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            musicAS.volume = Mathf.SmoothStep(startVol, musicVol, elapsedTime / duration);
+            yield return null;
+        }
+        musicAS.volume = musicVol;
+    }
+
+    /*
+     * Play the tattooGun sound and ambient pain sound.
+     * Invoked in OnTriggerEnter() in DrawLine.cs
+     */
+    public void PlayMachineSound()
+    {
+        tattooGunAS.volume = tattooGunVol;
+        ambientPainAS.volume = ambientPainVol;
     }
 
     /*

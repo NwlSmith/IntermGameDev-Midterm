@@ -21,6 +21,7 @@ public class Level2Transitions : MonoBehaviour
     {
         stencils[1].gameObject.SetActive(false);
         stencils[2].gameObject.SetActive(false);
+        GameManager.instance.curStencil = stencils[0];
     }
 
     /*
@@ -50,7 +51,9 @@ public class Level2Transitions : MonoBehaviour
         // If that was NOT the last stencil, enable the next one.
         if (curStencil < stencils.Length)
         {
+            AudioManager.instance.TransitionTrack();
             stencils[curStencil].gameObject.SetActive(true);
+            GameManager.instance.curStencil = stencils[curStencil];
             gm.progressText.enabled = true;
             gm.UpdateProgressText(1, 1);
             StartCoroutine(gm.RestartGame());

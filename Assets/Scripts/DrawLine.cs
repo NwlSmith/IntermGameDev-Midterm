@@ -37,6 +37,8 @@ public class DrawLine : MonoBehaviour
             CreateLine();
             numLines++;
         }
+
+        AudioManager.instance.PlayMachineSound();
     }
 
     private void OnTriggerStay(Collider other)
