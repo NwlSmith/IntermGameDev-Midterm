@@ -9,10 +9,12 @@ Intermediate Game Development Midterm
 
 BUILD LOCATED IN /ZippedBuilds/
 
+
 ### Tutorials
 
 Tentacle modelling: https://www.youtube.com/watch?v=1Ap-5D1oRbE
 Line Drawing: https://www.youtube.com/watch?v=RRJcIoYI3ZE
+
 
 ### Textures
 
@@ -100,6 +102,7 @@ https://freesound.org/people/paep3nguin/sounds/388046/
 NEXT STEPS:
 
 - stencil clip with ink
+
 
 STRETCH GOALS:
 
