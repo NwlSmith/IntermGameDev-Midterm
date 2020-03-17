@@ -34,11 +34,10 @@ public class DrawLine : MonoBehaviour
         // If the InkProjector GameObject collider enters an object with the "Skin" tag, draw a line.
         if (other.gameObject.tag == "Skin")
         {
+            AudioManager.instance.PlayMachineSound();
             CreateLine();
             numLines++;
         }
-
-        AudioManager.instance.PlayMachineSound();
     }
 
     private void OnTriggerStay(Collider other)

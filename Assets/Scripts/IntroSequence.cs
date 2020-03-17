@@ -38,8 +38,7 @@ public class IntroSequence : MonoBehaviour
         exitImg.color = transparent;
         websiteText.color = transparent;
         websiteImg.color = transparent;
-
-    fadeImg.color = fullColor;
+        fadeImg.color = fullColor;
     }
 
     /*

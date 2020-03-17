@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 /*
 * Date created: 7/21/2010
 * Creator: jashan
@@ -17,6 +18,7 @@ public class Screenshot : MonoBehaviour
     public int resWidth = 2550;
     public int resHeight = 3300;
     public bool takeHiResShot = false;
+    public string folder;
 
     /*
      * Generate the name for this screenshot
@@ -28,6 +30,35 @@ public class Screenshot : MonoBehaviour
                              Application.dataPath,
                              width, height,
                              System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+    }
+
+    // create a unique filename using a one-up variable
+    private string UniqueFilename(int width, int height)
+    {
+        // if folder not specified by now use a good default
+        if (folder == null || folder.Length == 0)
+        {
+            folder = Application.dataPath;
+            if (Application.isEditor)
+            {
+                // put screenshots in folder above asset path so unity doesn't index the files
+                var stringPath = folder + "/..";
+                folder = Path.GetFullPath(stringPath);
+            }
+            folder += "/screenshots";
+
+            // make sure directoroy exists
+            System.IO.Directory.CreateDirectory(folder);
+
+            // count number of files of specified format in folder
+            string mask = string.Format("screen_{0}x{1}*.png", width, height);
+        }
+
+        // use width, height, and counter for unique file name
+        var filename = string.Format("{0}/screen_{1}x{2}_{3}.png", folder, width, height, System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+
+        // return unique filename
+        return filename;
     }
 
     /*
@@ -53,7 +84,7 @@ public class Screenshot : MonoBehaviour
 
             // Encode texture onto image.
             byte[] bytes = screenShot.EncodeToPNG();
-            string filename = ScreenShotName(resWidth, resHeight);
+            string filename = UniqueFilename(resWidth, resHeight);
             System.IO.File.WriteAllBytes(filename, bytes);
             Debug.Log(string.Format("Took screenshot to: {0}", filename));
 
