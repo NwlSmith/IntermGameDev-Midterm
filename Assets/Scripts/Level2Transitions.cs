@@ -16,12 +16,14 @@ public class Level2Transitions : MonoBehaviour
     public int curStencil = 0;
     public float whiteFadeDuration = 2f;
     public GameObject finishedCameraPos;
+    public Button exitButton2;
 
     void Start()
     {
         stencils[1].gameObject.SetActive(false);
         stencils[2].gameObject.SetActive(false);
         GameManager.instance.curStencil = stencils[0];
+        exitButton2.gameObject.SetActive(false);
     }
 
     /*
@@ -65,7 +67,7 @@ public class Level2Transitions : MonoBehaviour
             gm.nextButton.gameObject.SetActive(false);
             StartCoroutine(gm.LerpCameraToPos(finishedCameraPos));
             // Display screenshot and Endgame buttons
-            gm.exitButton.gameObject.SetActive(true);
+            exitButton2.gameObject.SetActive(true);
             gm.screenshotButton.gameObject.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;

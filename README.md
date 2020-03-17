@@ -154,14 +154,29 @@ https://freesound.org/people/paep3nguin/sounds/388046/
 
 NEXT STEPS:
 
-- stencil clip with ink
+- Bug: stencil clips with ink
+
+- Bug: can't really see tattoo on screenshot screen
+
+- Feature: Free-draw mode
+
+- Feature: Press button to hide the hint colliders
+
+- Feature: Write pseudo-artsy vague stuff between scenes like "THERE IS NO ERASE" etc.
+
+- Feature: Make Squid move?
 
 
 STRETCH GOALS:
 
-- UI fade in + out?
-
 - Make robot hand?
+
+
+ISSUES WITH MAC BUILD:
+
+- Zoom in too close
+
+- Needle animation is too slow?
 
 ## Changelog:
 
