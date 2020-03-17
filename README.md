@@ -166,6 +166,8 @@ NEXT STEPS:
 
 - Feature: Make Squid move?
 
+- Feature: Drip particles under squid?
+
 
 STRETCH GOALS:
 
