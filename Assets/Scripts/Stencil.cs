@@ -49,4 +49,16 @@ public class Stencil : MonoBehaviour
             GameManager.instance.StencilFinished(cameraPos);
         }
     }
+
+    /*
+     * Deactivate all remaining StencilColliders.
+     * Called in FinishTheDrawing() in GameManager.cs.
+     */
+    public void DeactivateChildren()
+    {
+        foreach(StencilCollider sc in colliders)
+        {
+            sc.gameObject.SetActive(false);
+        }
+    }
 }

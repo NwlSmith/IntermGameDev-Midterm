@@ -17,6 +17,8 @@ public class IntroSequence : MonoBehaviour
     public Text nameText;
     public Text buttonText;
     public Image buttonImg;
+    public Text freeText;
+    public Image freeImg;
     public Text exitText;
     public Image exitImg;
     public Text websiteText;
@@ -26,26 +28,40 @@ public class IntroSequence : MonoBehaviour
     public Color transparent = new Color(0f, 0f, 0f, 0f);
     public Color fullColor = new Color(0f, 0f, 0f, 1f);
     public int curRotTarget = 1;
+    public bool justTitle = false;
 
     void Start()
     {
-        StartCoroutine(Sequence());
+        if (justTitle)
+        {
+            fadeImg.color = Color.white;
+            //fadeImg.GetComponent<Animator>().SetTrigger("FullWhite");
+            StartCoroutine(TextSequence());
+        }
+        else
+        {
+            fadeImg.color = fullColor;
+            StartCoroutine(CameraSequence());
+        }
+        /*
         titleText.color = transparent;
         nameText.color = transparent;
         buttonText.color = transparent;
         buttonImg.color = transparent;
+        freeText.color = transparent;
+        freeImg.color = transparent;
         exitText.color = transparent;
         exitImg.color = transparent;
         websiteText.color = transparent;
-        websiteImg.color = transparent;
-        fadeImg.color = fullColor;
+        websiteImg.color = transparent;*/
+        
     }
 
     /*
-     * Intro sequence.
+     * Intro camera sequence.
      * Called in Start().
      */
-    private IEnumerator Sequence()
+    private IEnumerator CameraSequence()
     {
         GameObject cameraGO = Camera.main.gameObject;
 
@@ -78,6 +94,7 @@ public class IntroSequence : MonoBehaviour
         }
 
         // Fade to white.
+        fadeImg.GetComponent<Animator>().SetTrigger("FullWhite");
         elapsedTime = 0f;
         startColor = fadeImg.color;
         while (elapsedTime < duration)
@@ -88,9 +105,42 @@ public class IntroSequence : MonoBehaviour
         }
         fadeImg.color = Color.white;
 
+        StartCoroutine(TextSequence());
+    }
+
+    private IEnumerator TextSequence()
+    {
         // Fade Ink in.
-        elapsedTime = 0f;
-        startColor = titleText.color;
+        titleText.GetComponent<Animator>().SetTrigger("Black");
+        yield return new WaitForSeconds(.75f);
+
+        // Fade name in.
+        nameText.GetComponent<Animator>().SetTrigger("Black");
+        yield return new WaitForSeconds(.75f);
+
+        // Fade begin button in.
+        buttonText.GetComponent<Animator>().SetTrigger("Black");
+        buttonImg.GetComponent<Animator>().SetTrigger("Black");
+        yield return new WaitForSeconds(.75f);
+
+        // Fade rest of buttons in.
+        freeText.GetComponent<Animator>().SetTrigger("Black");
+        freeImg.GetComponent<Animator>().SetTrigger("Black");
+        exitText.GetComponent<Animator>().SetTrigger("Black");
+        exitImg.GetComponent<Animator>().SetTrigger("Black");
+        websiteText.GetComponent<Animator>().SetTrigger("Black");
+        websiteImg.GetComponent<Animator>().SetTrigger("Black");
+    }
+    /*
+     * Intro text sequence.
+     * Called in Start() and CameraSequence().
+     *//*
+    private IEnumerator TextSequence()
+    {
+        fadeImg.color = Color.white;
+        // Fade Ink in.
+        float elapsedTime = 0f;
+        Color startColor = titleText.color;
         while (elapsedTime < duration / 2)
         {
             elapsedTime += Time.unscaledDeltaTime;
@@ -110,7 +160,7 @@ public class IntroSequence : MonoBehaviour
         }
         nameText.color = fullColor;
 
-        // Fade buttons in.
+        // Fade begin button in.
         elapsedTime = 0f;
         startColor = buttonText.color;
         Color startColorButton = buttonImg.color;
@@ -120,19 +170,34 @@ public class IntroSequence : MonoBehaviour
             float t = elapsedTime / (duration / 2);
             buttonText.color = Color.Lerp(startColor, fullColor, t);
             buttonImg.color = Color.Lerp(startColorButton, fullColor, t);
+            yield return null;
+        }
+        buttonText.color = fullColor;
+        buttonImg.color = fullColor;
+
+        // Fade rest of buttons in.
+        elapsedTime = 0f;
+        startColor = freeText.color;
+        startColorButton = freeImg.color;
+        while (elapsedTime < duration / 2)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            float t = elapsedTime / (duration / 2);
+            freeText.color = Color.Lerp(startColor, fullColor, t);
+            freeImg.color = Color.Lerp(startColorButton, fullColor, t);
             exitText.color = Color.Lerp(startColor, fullColor, t);
             exitImg.color = Color.Lerp(startColorButton, fullColor, t);
             websiteText.color = Color.Lerp(startColor, fullColor, t);
             websiteImg.color = Color.Lerp(startColorButton, fullColor, t);
             yield return null;
         }
-        buttonText.color = fullColor;
-        buttonImg.color = fullColor;
+        freeText.color = fullColor;
+        freeImg.color = fullColor;
         exitText.color = fullColor;
         exitImg.color = fullColor;
         websiteText.color = fullColor;
         websiteImg.color = fullColor;
-    }
+    }*/
 
     /*
      * Starts the game.
@@ -142,7 +207,18 @@ public class IntroSequence : MonoBehaviour
     public void StartGame()
     {
         AudioManager.instance.TransitionTrack();
-        StartCoroutine(StartGameCO());
+        StartCoroutine(StartGameCO("Level 1"));
+    }
+    
+    /*
+     * Starts free hand mode.
+     * Calls StartGameCO() coroutine. Fades to white, fades out buttons, and loads free hand scene.
+     * Called by button on IntroSequence.
+     */
+    public void StartFreeHand()
+    {
+        AudioManager.instance.TransitionTrack(4);
+        StartCoroutine(StartGameCO("Free Draw"));
     }
 
     /*
@@ -150,32 +226,80 @@ public class IntroSequence : MonoBehaviour
      * Fades to white, fades out buttons, and loads next scene.
      * Called by StartGame().
      */
-    private IEnumerator StartGameCO()
+    private IEnumerator StartGameCO(string levelString)
+    {
+        // Fade rest of buttons out.
+        freeText.GetComponent<Animator>().SetTrigger("Trans");
+        freeImg.GetComponent<Animator>().SetTrigger("Trans");
+        exitText.GetComponent<Animator>().SetTrigger("Trans");
+        exitImg.GetComponent<Animator>().SetTrigger("Trans");
+        websiteText.GetComponent<Animator>().SetTrigger("Trans");
+        websiteImg.GetComponent<Animator>().SetTrigger("Trans");
+        yield return new WaitForSeconds(.75f);
+
+        // Fade begin button out.
+        buttonText.GetComponent<Animator>().SetTrigger("Trans");
+        buttonImg.GetComponent<Animator>().SetTrigger("Trans");
+
+        // Fade name out.
+        nameText.GetComponent<Animator>().SetTrigger("Trans");
+        yield return new WaitForSeconds(.75f);
+
+        // Fade Ink out.
+        titleText.GetComponent<Animator>().SetTrigger("Trans");
+        yield return new WaitForSeconds(.75f);
+        
+
+        SceneManager.LoadScene(levelString, LoadSceneMode.Single);
+    }
+
+    /*
+     * Coroutine that initiates the game.
+     * Fades to white, fades out buttons, and loads next scene.
+     * Called by StartGame().
+     *//*
+    private IEnumerator StartGameCO(string levelString)
     {
         // Fade to white and fade out buttons.
         float elapsedTime = 0f;
-        // Fade button out.
+
+        // Fade bottom buttons out.
         elapsedTime = 0f;
-        Color startColor = buttonText.color;
-        Color startColorButton = buttonImg.color;
+        Color startColor = freeText.color;
+        Color startColorButton = freeImg.color;
         while (elapsedTime < duration / 4)
         {
             elapsedTime += Time.unscaledDeltaTime;
             float t = elapsedTime / (duration / 4);
-            buttonText.color = Color.Lerp(startColor, transparent, t);
-            buttonImg.color = Color.Lerp(startColorButton, transparent, t);
+            freeText.color = Color.Lerp(startColor, transparent, t);
+            freeImg.color = Color.Lerp(startColorButton, transparent, t);
             exitText.color = Color.Lerp(startColor, transparent, t);
             exitImg.color = Color.Lerp(startColorButton, transparent, t);
             websiteText.color = Color.Lerp(startColor, transparent, t);
             websiteImg.color = Color.Lerp(startColorButton, transparent, t);
             yield return null;
         }
-        buttonText.color = transparent;
-        buttonImg.color = transparent;
+        freeText.color = transparent;
+        freeImg.color = transparent;
         exitText.color = transparent;
         exitImg.color = transparent;
         websiteText.color = transparent;
         websiteImg.color = transparent;
+
+        // Fade begin button out.
+        elapsedTime = 0f;
+        startColor = buttonText.color;
+        startColorButton = buttonImg.color;
+        while (elapsedTime < duration / 4)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            float t = elapsedTime / (duration / 4);
+            buttonText.color = Color.Lerp(startColor, transparent, t);
+            buttonImg.color = Color.Lerp(startColorButton, transparent, t);
+            yield return null;
+        }
+        buttonText.color = transparent;
+        buttonImg.color = transparent;
 
         // Fade name out.
         elapsedTime = 0f;
@@ -199,8 +323,8 @@ public class IntroSequence : MonoBehaviour
         }
         titleText.color = transparent;
 
-        SceneManager.LoadScene("Level 1", LoadSceneMode.Single);
-    }
+        SceneManager.LoadScene(levelString, LoadSceneMode.Single);
+    }*/
 
     /*
      * Exits the game.

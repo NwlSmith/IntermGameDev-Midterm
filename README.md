@@ -156,22 +156,26 @@ NEXT STEPS:
 
 - Bug: stencil clips with ink
 
-- Bug: can't really see tattoo on screenshot screen
+- Feature: Buttons fade in / out
 
-- Feature: Free-draw mode
+- Convert UI to use animations
+
+- Feature: Go back to drawing if not done with free draw.
 
 - Feature: Press button to hide the hint colliders
 
 - Feature: Write pseudo-artsy vague stuff between scenes like "THERE IS NO ERASE" etc.
 
-- Feature: Make Squid move?
-
-- Feature: Drip particles under squid?
-
 
 STRETCH GOALS:
 
 - Make robot hand?
+
+- Alter texture/material in code instead of placing linerenderer on top?
+
+- Feature: Make Squid move?
+
+- Feature: Drip particles under squid?
 
 
 ISSUES WITH MAC BUILD:
@@ -255,3 +259,15 @@ ISSUES WITH MAC BUILD:
 - Adjusted post-processing
 
 - Inks now appear on needles
+
+### Post-Release:
+
+- Resized buttons.
+
+- Added white gradient to finished drawing view so the player can see their art.
+
+- Finally fixed problem with second collider in Axe stencil.
+
+- Added Free Draw mode.
+
+- Added Main menu that can be returned to

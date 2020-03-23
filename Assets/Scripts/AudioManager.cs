@@ -130,60 +130,33 @@ public class AudioManager : MonoBehaviour
     }
 
     /*
-     * Plays the next loop in the AudioClip array when the current loop is over.
+     * Plays the next loop in the AudioClip array.
      * Invoked in the Level1to2 class in () and Level2Transitions() when transitioning between stencils.
      */
     public void TransitionTrack()
     {
-        //musicAS.loop = false;
         loopNum++;
         loopNum = Mathf.Min(loopNum, loops.Length - 1);
-        //StartCoroutine(NextTrack());
-        ExpNextTrack();
-    }
-
-    private void ExpNextTrack()
-    {
-        float time = musicAS.time;
-        musicAS.clip = loops[loopNum];
-        musicAS.time = time;
-        musicAS.Play();
+        NextTrack();
     }
 
     /*
-     * Wait until the current synth loop is finished and play the queued synth.
-     * Invoked TransitionTrack(). 
+     * Plays the specified loop in the AudioClip array.
+     * Invoked in the Level1to2 class in () and Level2Transitions() when transitioning between stencils.
      */
-    private IEnumerator NextTrack()
+    public void TransitionTrack(int newNum)
     {
-        // Fade music out.
-        float duration = .5f;
-        float elapsedTime = 0f;
-        float startVol = musicAS.volume;
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            musicAS.volume = Mathf.SmoothStep(startVol, 0f, elapsedTime / duration);
-            yield return null;
-        }
-        musicAS.volume = 0f;
+        loopNum = newNum;
+        loopNum = Mathf.Min(loopNum, loops.Length - 1);
+        NextTrack();
+    }
 
-        // Switch the track.
+    private void NextTrack()
+    {
         float time = musicAS.time;
         musicAS.clip = loops[loopNum];
         musicAS.time = time;
         musicAS.Play();
-
-        // Fade music back in.
-        elapsedTime = .5f;
-        startVol = musicAS.volume;
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            musicAS.volume = Mathf.SmoothStep(startVol, musicVol, elapsedTime / duration);
-            yield return null;
-        }
-        musicAS.volume = musicVol;
     }
 
     /*

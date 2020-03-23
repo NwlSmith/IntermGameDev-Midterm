@@ -47,13 +47,15 @@ public class Level2Transitions : MonoBehaviour
         }
         pauseImg.color = Color.white;
 
+        GameManager.instance.gradientImg.color = new Color(1f, 1f, 1f, 0f);
+
         // Update Stencils.
         stencils[curStencil].gameObject.SetActive(false);
         curStencil++;
         // If that was NOT the last stencil, enable the next one.
         if (curStencil < stencils.Length)
         {
-            AudioManager.instance.TransitionTrack();
+            AudioManager.instance.TransitionTrack(curStencil + 2);
             stencils[curStencil].gameObject.SetActive(true);
             GameManager.instance.curStencil = stencils[curStencil];
             gm.progressText.enabled = true;

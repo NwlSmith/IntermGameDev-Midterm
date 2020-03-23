@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 /*
  * Date created: 2/25/2020
  * Creator: Nate Smith
@@ -21,7 +22,8 @@ public class GameManager : MonoBehaviour
     public bool levelTransition = false;
 
     public Text pauseText;
-    public Image pauseImg;
+    public Image solidImg;
+    public Image gradientImg;
     public Text progressText;
     public Text finishedText;
     public Button screenshotButton;
@@ -38,10 +40,10 @@ public class GameManager : MonoBehaviour
     public Level1To2 level1To2;
     public Level2Transitions level2Transitions;
 
-    // Private Variables.
-    private MoveHandRotate moveHandRotate;
+    // Protected Variables.
+    protected MoveHandRotate moveHandRotate;
 
-    private void Start()
+    protected void Start()
     {
         // Ensure that there is only one instance of the GameManager.
         if (instance == null)
@@ -53,25 +55,35 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
+        // Deactivate the UI
+        DeactivateUI();
+        
+        moveHandRotate = FindObjectOfType<MoveHandRotate>();
+    }
+
+    /*
+     * Deactivate all UI at the start of the scene.
+     * Called in Start().
+     */
+    protected virtual void DeactivateUI()
+    {
         // Disable the text UI and white fade UI.
         pauseText.enabled = false;
-        pauseImg.color = new Color(1f, 1f, 1f, 1f);
-        StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, 0f), 1.5f));
+        solidImg.color = new Color(1f, 1f, 1f, 1f);
+        gradientImg.color = new Color(1f, 1f, 1f, 0f);
+        StartCoroutine(SolidFadeLerp(new Color(1f, 1f, 1f, 0f), 1.5f));
 
         finishedText.enabled = false;
         screenshotButton.gameObject.SetActive(false);
         nextButton.gameObject.SetActive(false);
         exitButton.gameObject.SetActive(false);
         unpauseButton.gameObject.SetActive(false);
-
-
-        moveHandRotate = FindObjectOfType<MoveHandRotate>();
     }
 
-    void Update()
+    protected void Update()
     {
         // If the player presses the pause key, toggle the pause mode.
-        if (!levelTransition && Input.GetKeyDown(KeyCode.Escape))
+        if (!levelTransition && Input.GetKeyDown(KeyCode.Escape) && !screenshotButton.gameObject.activeSelf)
         {
             cursorLocked = !cursorLocked;
             // Lock the cursor, restart time, get rid of the pause UI.
@@ -87,23 +99,33 @@ public class GameManager : MonoBehaviour
         }
 
         // If the finish game text prompt is enabled, check for the key press.
-        if (!levelTransition && finishedText.enabled)
+        if (!levelTransition && finishedText.enabled && !unpauseButton.gameObject.activeSelf)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
                 // Disable the normal UI and send the Camera to the display tattoo position.
-                progressText.enabled = false;
-                finishedText.enabled = false;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                Camera.main.GetComponent<CameraFollow>().enabled = false;
-                moveHandRotate.gameObject.SetActive(false);
-                StartCoroutine(LerpCameraToPos(nextCameraTarget));
-                StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, .4f), .75f));
-                AudioManager.instance.PlayFinishedSound();
-                curStencil.GetComponent<MeshRenderer>().enabled = false;
+                FinishTheDrawing();
             }
         }
+    }
+
+    /*
+     * Disable and enable UI, enable cursor, deactivate the tattoo hand and the stencil.
+     * Called in Update(), or from a button press.
+     */
+    protected virtual void FinishTheDrawing()
+    {
+        progressText.enabled = false;
+        finishedText.enabled = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Camera.main.GetComponent<CameraFollow>().enabled = false;
+        moveHandRotate.gameObject.SetActive(false);
+        StartCoroutine(LerpCameraToPos(nextCameraTarget));
+        StartCoroutine(GradientFadeLerp(new Color(1f, 1f, 1f, .4f), .75f));
+        AudioManager.instance.PlayFinishedSound();
+        curStencil.GetComponent<MeshRenderer>().enabled = false;
+        curStencil.DeactivateChildren();
     }
 
     /*
@@ -152,7 +174,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         cursorLocked = true;
         StartCoroutine(TimeLerp(1f));
-        StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, 0f), .75f));
+        StartCoroutine(SolidFadeLerp(new Color(1f, 1f, 1f, 0f), .75f));
         pauseText.enabled = false;
         exitButton.gameObject.SetActive(false);
         unpauseButton.gameObject.SetActive(false);
@@ -169,15 +191,47 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         cursorLocked = false;
         StartCoroutine(TimeLerp(0f));
-        StartCoroutine(FadeLerp(new Color(1f, 1f, 1f, .4f), .75f));
+        StartCoroutine(SolidFadeLerp(new Color(1f, 1f, 1f, .4f), .75f));
         pauseText.enabled = true;
         exitButton.gameObject.SetActive(true);
         unpauseButton.gameObject.SetActive(true);
     }
 
     /*
-     * Exits the game.
+     * Returns to main menu.
      * Called by button on IntroSequence.
+     */
+    public void MainMenu()
+    {
+        AudioManager.instance.TransitionTrack(0);
+        StartCoroutine(MainMenuFadeCO());
+    }
+
+    /*
+     * Returns to main menu after fading screen to white.
+     * Called by MainMenu() in GameManager.cs.
+     */
+    private IEnumerator MainMenuFadeCO()
+    {
+        StartCoroutine(SolidFadeLerp(Color.white, 1f));
+        pauseText.enabled = false;
+        finishedText.enabled = false;
+        screenshotButton.gameObject.SetActive(false);
+        exitButton.gameObject.SetActive(false);
+        unpauseButton.gameObject.SetActive(false);
+        if (finishedText)
+            finishedText.enabled = false;
+        if (progressText)
+            progressText.enabled = false;
+        Time.timeScale = 1f;
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Transitioning now");
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
+
+    /*
+     * Exits the game.
+     * Called by button in main menu.
      */
     public void EndGame()
     {
@@ -231,23 +285,43 @@ public class GameManager : MonoBehaviour
     }
 
     /*
-     * Lerp a white image to desired opacity.
+     * Lerp the solid white image to desired opacity.
      * The image is smoothly faded in based on:
      * The fraction of how much time has passed since the start of the Lerp
      * Divided by the total duration of the Lerp.
      * Invoked by Update.
      * targetTimeScale: the target timescale that will be achieved at the end of the lerp.
      */
-    public IEnumerator FadeLerp(Color targetColor, float duration)
+    public IEnumerator SolidFadeLerp(Color targetColor, float duration)
     {
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
             elapsedTime += Time.unscaledDeltaTime;
-            pauseImg.color = Color.Lerp(pauseImg.color, targetColor, (elapsedTime / duration));
+            solidImg.color = Color.Lerp(solidImg.color, targetColor, (elapsedTime / duration));
             yield return null;
         }
-        pauseImg.color = targetColor;
+        solidImg.color = targetColor;
+    }
+
+    /*
+     * Lerp a white gradient image to desired opacity.
+     * The image is smoothly faded in based on:
+     * The fraction of how much time has passed since the start of the Lerp
+     * Divided by the total duration of the Lerp.
+     * Invoked by Update.
+     * targetTimeScale: the target timescale that will be achieved at the end of the lerp.
+     */
+    public IEnumerator GradientFadeLerp(Color targetColor, float duration)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            gradientImg.color = Color.Lerp(gradientImg.color, targetColor, (elapsedTime / duration));
+            yield return null;
+        }
+        gradientImg.color = targetColor;
     }
 
     /*
@@ -279,6 +353,11 @@ public class GameManager : MonoBehaviour
         {
             screenshotButton.gameObject.SetActive(true);
             nextButton.gameObject.SetActive(true);
+        }
+        else if (GetComponent<FreeDrawManager>())
+        {
+            screenshotButton.gameObject.SetActive(true);
+            exitButton.gameObject.SetActive(true);
         }
     }
 

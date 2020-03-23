@@ -11,9 +11,6 @@ using UnityEngine.UI;
  */
 public class Level1To2 : MonoBehaviour
 {
-    // Public variables.
-    public Image pauseImg;
-
     /*
      * Transition to level 2.
      * Called in Next() in GameManager.cs.
@@ -22,27 +19,18 @@ public class Level1To2 : MonoBehaviour
     {
         Debug.Log("Level2()");
         GameManager.instance.levelTransition = true;
-        pauseImg = GameManager.instance.pauseImg;
+        StartCoroutine(GameManager.instance.GradientFadeLerp(new Color(1f, 1f, 1f, 1f), 1.5f));
         StartCoroutine(Transition());
         AudioManager.instance.TransitionTrack();
     }
 
     /*
-     * Transition to level 2, fading the screen.
+     * Transition to level 2 after the screen fade.
      * Called in Level2().
      */
     private IEnumerator Transition()
     {
-        float duration = 1.25f;
-        float elapsedTime = 0f;
-        Color startColor = pauseImg.color;
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            pauseImg.color = Color.Lerp(startColor, Color.white, (elapsedTime / duration));
-            yield return null;
-        }
-        pauseImg.color = Color.white;
+        yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene("Level 2", LoadSceneMode.Single);
     }
 }

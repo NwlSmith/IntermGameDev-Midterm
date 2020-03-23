@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 2.unity
     guid: cec5593cc3ebb8647ac0344300e58988
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 8aa50304cd764234facf9ec49f8fc6d2
+  - enabled: 1
+    path: Assets/Scenes/Free Draw.unity
+    guid: 96728a03cf9142a469a6377d85c96208
   m_configObjects: {}
