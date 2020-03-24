@@ -1848,9 +1848,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf714a84f50aab4fb0ba36fa797a168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posSpeed: 25
+  posSpeed: 5
   sensitivityX: 0.06
-  sensitivityY: 1.2
+  sensitivityY: 0.8
   down: 0
   boundary: {x: 90, y: -55, z: 1.5, w: -4.4}
   targetPos: {x: 0, y: 0, z: 0}
@@ -1858,7 +1858,7 @@ MonoBehaviour:
   upHeight: 0.5
   downHeight: 0
   targetRot: {x: 0, y: 0, z: 0}
-  rotSpeed: 7
+  rotSpeed: 5
 --- !u!54 &484758626
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5537,6 +5537,7 @@ MonoBehaviour:
   levelTransition: 0
   paused: 0
   finished: 0
+  finishedPressed: 0
   pauseText: {fileID: 438256782}
   solidImg: {fileID: 1639980983}
   gradientImg: {fileID: 342252066}
@@ -6913,7 +6914,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1639980982

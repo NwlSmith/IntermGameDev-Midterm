@@ -12952,9 +12952,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf714a84f50aab4fb0ba36fa797a168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posSpeed: 25
+  posSpeed: 5
   sensitivityX: 0.06
-  sensitivityY: 1.2
+  sensitivityY: 0.8
   down: 0
   boundary: {x: 90, y: -55, z: 1.5, w: -4.4}
   targetPos: {x: 0, y: 0, z: 0}
@@ -12962,7 +12962,7 @@ MonoBehaviour:
   upHeight: 0.5
   downHeight: 0
   targetRot: {x: 0, y: 0, z: 0}
-  rotSpeed: 7
+  rotSpeed: 5
 --- !u!54 &484758626
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -36555,6 +36555,7 @@ MonoBehaviour:
   levelTransition: 0
   paused: 0
   finished: 0
+  finishedPressed: 0
   pauseText: {fileID: 1875858907}
   solidImg: {fileID: 1891133290}
   gradientImg: {fileID: 1825531951}

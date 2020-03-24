@@ -14,8 +14,10 @@ public class FreeDrawManager : GameManager
     protected override void DeactivateUI()
     {
         // Disable the text UI and white fade UI.
-        base.DeactivateUI();
         finishedText.GetComponent<Animator>().SetTrigger("Black");
+        screenshotButton.GetComponent<Image>().raycastTarget = false;
+        exitButton.GetComponent<Image>().raycastTarget = false;
+        unpauseButton.GetComponent<Image>().raycastTarget = false;
     }
 
     /*

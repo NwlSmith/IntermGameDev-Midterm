@@ -72,10 +72,10 @@ public class GameManager : MonoBehaviour
     {
         // Disable the text UI and white fade UI.
         progressText.GetComponent<Animator>().SetTrigger("Black");
-        screenshotButton.GetComponent<Image>().raycastTarget = false; ;
+        screenshotButton.GetComponent<Image>().raycastTarget = false;
         nextButton.GetComponent<Image>().raycastTarget = false;
-        exitButton.GetComponent<Image>().raycastTarget = false; ;
-        unpauseButton.GetComponent<Image>().raycastTarget = false; ;
+        exitButton.GetComponent<Image>().raycastTarget = false;
+        unpauseButton.GetComponent<Image>().raycastTarget = false;
     }
 
     protected void Update()
@@ -229,8 +229,11 @@ public class GameManager : MonoBehaviour
         finishedText.GetComponent<Animator>().SetTrigger("Trans");
         screenshotButton.GetComponent<Animator>().SetTrigger("Trans");
         screenshotButton.GetComponent<Image>().raycastTarget = false;
-        nextButton.GetComponent<Animator>().SetTrigger("Trans");
-        nextButton.GetComponent<Image>().raycastTarget = false;
+        if (nextButton)
+        {
+            nextButton.GetComponent<Animator>().SetTrigger("Trans");
+            nextButton.GetComponent<Image>().raycastTarget = false;
+        }
         exitButton.GetComponent<Animator>().SetTrigger("Trans");
         screenshotButton.GetComponent<Image>().raycastTarget = false;
         unpauseButton.GetComponent<Animator>().SetTrigger("Trans");
