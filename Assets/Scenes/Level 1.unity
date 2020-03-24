@@ -7306,6 +7306,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursorLocked: 1
   levelTransition: 0
+  paused: 0
+  finished: 0
   pauseText: {fileID: 114987311}
   solidImg: {fileID: 1280014132}
   gradientImg: {fileID: 1252783452}
@@ -11876,7 +11878,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 10.00001, y: 0.000015258789}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!95 &2121597770
 Animator:

@@ -156,12 +156,6 @@ NEXT STEPS:
 
 - Bug: stencil clips with ink
 
-- Feature: Buttons fade in / out
-
-- Convert UI to use animations
-
-- Feature: Go back to drawing if not done with free draw.
-
 - Feature: Press button to hide the hint colliders
 
 - Feature: Write pseudo-artsy vague stuff between scenes like "THERE IS NO ERASE" etc.
@@ -271,3 +265,5 @@ ISSUES WITH MAC BUILD:
 - Added Free Draw mode.
 
 - Added Main menu that can be returned to
+
+- Converted all UI to Animations

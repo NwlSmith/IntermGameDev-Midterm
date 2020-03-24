@@ -39,7 +39,7 @@ public class MoveHandDownRaycast : MoveHandDown
         }
 
         // While the mouse is clicked, and the game is not paused, move toward lowered position
-        if (!GameManager.instance.levelTransition && Input.GetMouseButton(0) && !GameManager.instance.screenshotButton.gameObject.activeSelf)
+        if (!GameManager.instance.levelTransition && Input.GetMouseButton(0) && !GameManager.instance.finishedPressed && !GameManager.instance.paused)
         {
             down = true;
             targetHeight = minHeightAdjusted;

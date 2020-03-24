@@ -19,7 +19,7 @@ public class Level1To2 : MonoBehaviour
     {
         Debug.Log("Level2()");
         GameManager.instance.levelTransition = true;
-        StartCoroutine(GameManager.instance.GradientFadeLerp(new Color(1f, 1f, 1f, 1f), 1.5f));
+        GameManager.instance.gradientImg.GetComponent<Animator>().SetTrigger("FullWhite");
         StartCoroutine(Transition());
         AudioManager.instance.TransitionTrack();
     }

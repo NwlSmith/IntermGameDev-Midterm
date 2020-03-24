@@ -35,7 +35,6 @@ public class IntroSequence : MonoBehaviour
         if (justTitle)
         {
             fadeImg.color = Color.white;
-            //fadeImg.GetComponent<Animator>().SetTrigger("FullWhite");
             StartCoroutine(TextSequence());
         }
         else
@@ -43,18 +42,6 @@ public class IntroSequence : MonoBehaviour
             fadeImg.color = fullColor;
             StartCoroutine(CameraSequence());
         }
-        /*
-        titleText.color = transparent;
-        nameText.color = transparent;
-        buttonText.color = transparent;
-        buttonImg.color = transparent;
-        freeText.color = transparent;
-        freeImg.color = transparent;
-        exitText.color = transparent;
-        exitImg.color = transparent;
-        websiteText.color = transparent;
-        websiteImg.color = transparent;*/
-        
     }
 
     /*
@@ -223,7 +210,7 @@ public class IntroSequence : MonoBehaviour
 
     /*
      * Coroutine that initiates the game.
-     * Fades to white, fades out buttons, and loads next scene.
+     * Fades out buttons and loads next scene.
      * Called by StartGame().
      */
     private IEnumerator StartGameCO(string levelString)
@@ -252,79 +239,6 @@ public class IntroSequence : MonoBehaviour
 
         SceneManager.LoadScene(levelString, LoadSceneMode.Single);
     }
-
-    /*
-     * Coroutine that initiates the game.
-     * Fades to white, fades out buttons, and loads next scene.
-     * Called by StartGame().
-     *//*
-    private IEnumerator StartGameCO(string levelString)
-    {
-        // Fade to white and fade out buttons.
-        float elapsedTime = 0f;
-
-        // Fade bottom buttons out.
-        elapsedTime = 0f;
-        Color startColor = freeText.color;
-        Color startColorButton = freeImg.color;
-        while (elapsedTime < duration / 4)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            float t = elapsedTime / (duration / 4);
-            freeText.color = Color.Lerp(startColor, transparent, t);
-            freeImg.color = Color.Lerp(startColorButton, transparent, t);
-            exitText.color = Color.Lerp(startColor, transparent, t);
-            exitImg.color = Color.Lerp(startColorButton, transparent, t);
-            websiteText.color = Color.Lerp(startColor, transparent, t);
-            websiteImg.color = Color.Lerp(startColorButton, transparent, t);
-            yield return null;
-        }
-        freeText.color = transparent;
-        freeImg.color = transparent;
-        exitText.color = transparent;
-        exitImg.color = transparent;
-        websiteText.color = transparent;
-        websiteImg.color = transparent;
-
-        // Fade begin button out.
-        elapsedTime = 0f;
-        startColor = buttonText.color;
-        startColorButton = buttonImg.color;
-        while (elapsedTime < duration / 4)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            float t = elapsedTime / (duration / 4);
-            buttonText.color = Color.Lerp(startColor, transparent, t);
-            buttonImg.color = Color.Lerp(startColorButton, transparent, t);
-            yield return null;
-        }
-        buttonText.color = transparent;
-        buttonImg.color = transparent;
-
-        // Fade name out.
-        elapsedTime = 0f;
-        startColor = nameText.color;
-        while (elapsedTime < duration / 4)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            nameText.color = Color.Lerp(startColor, transparent, (elapsedTime / (duration / 4)));
-            yield return null;
-        }
-        nameText.color = transparent;
-
-        // Fade title out.
-        elapsedTime = 0f;
-        startColor = titleText.color;
-        while (elapsedTime < duration / 2)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            titleText.color = Color.Lerp(startColor, transparent, (elapsedTime / (duration / 2)));
-            yield return null;
-        }
-        titleText.color = transparent;
-
-        SceneManager.LoadScene(levelString, LoadSceneMode.Single);
-    }*/
 
     /*
      * Exits the game.

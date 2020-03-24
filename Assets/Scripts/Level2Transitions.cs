@@ -23,7 +23,7 @@ public class Level2Transitions : MonoBehaviour
         stencils[1].gameObject.SetActive(false);
         stencils[2].gameObject.SetActive(false);
         GameManager.instance.curStencil = stencils[0];
-        exitButton2.gameObject.SetActive(false);
+        exitButton2.GetComponent<Image>().raycastTarget = false;
     }
 
     /*
@@ -37,17 +37,10 @@ public class Level2Transitions : MonoBehaviour
         GameManager gm = GameManager.instance;
 
         // Fade to white.
-        float elapsedTime = 0f;
-        Color startColor = pauseImg.color;
-        while (elapsedTime < whiteFadeDuration)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            pauseImg.color = Color.Lerp(startColor, Color.white, (elapsedTime / whiteFadeDuration));
-            yield return null;
-        }
-        pauseImg.color = Color.white;
+        pauseImg.GetComponent<Animator>().SetTrigger("FullWhite");
+        yield return new WaitForSeconds(whiteFadeDuration);
 
-        GameManager.instance.gradientImg.color = new Color(1f, 1f, 1f, 0f);
+        GameManager.instance.gradientImg.GetComponent<Animator>().SetTrigger("Trans");
 
         // Update Stencils.
         stencils[curStencil].gameObject.SetActive(false);
@@ -58,7 +51,7 @@ public class Level2Transitions : MonoBehaviour
             AudioManager.instance.TransitionTrack(curStencil + 2);
             stencils[curStencil].gameObject.SetActive(true);
             GameManager.instance.curStencil = stencils[curStencil];
-            gm.progressText.enabled = true;
+            gm.progressText.GetComponent<Animator>().SetTrigger("Black");
             gm.UpdateProgressText(1, 1);
             StartCoroutine(gm.RestartGame());
             // hide screenshot and next buttons
@@ -66,26 +59,21 @@ public class Level2Transitions : MonoBehaviour
         // If that was the last stencil, end the game.
         else
         {
-            gm.nextButton.gameObject.SetActive(false);
+            gm.nextButton.GetComponent<Animator>().SetTrigger("Trans");
+            gm.nextButton.GetComponent<Image>().raycastTarget = false;
             StartCoroutine(gm.LerpCameraToPos(finishedCameraPos));
             // Display screenshot and Endgame buttons
-            exitButton2.gameObject.SetActive(true);
-            gm.screenshotButton.gameObject.SetActive(true);
+            exitButton2.GetComponent<Animator>().SetTrigger("Black");
+            exitButton2.GetComponent<Image>().raycastTarget = true;
+            gm.screenshotButton.GetComponent<Animator>().SetTrigger("Black");
+            gm.screenshotButton.GetComponent<Image>().raycastTarget = true;
+            gm.gradientImg.GetComponent<Animator>().SetTrigger("FullWhite");
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
 
         // Fade to transparent.
-        elapsedTime = 0f;
-        startColor = pauseImg.color;
-        Color target = new Color(1f, 1f, 1f, 0f);
-        while (elapsedTime < whiteFadeDuration)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            pauseImg.color = Color.Lerp(startColor, target, (elapsedTime / whiteFadeDuration));
-            yield return null;
-        }
-        pauseImg.color = target;
+        pauseImg.GetComponent<Animator>().SetTrigger("Trans");
     }
 
 

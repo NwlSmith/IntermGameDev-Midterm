@@ -46,22 +46,6 @@ public class MoveHandManager : MonoBehaviour
     }
 
     /*
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.pauseText.enabled && !GameManager.instance.screenshotText.enabled)
-        {
-            if (round)
-            {
-                InitFlat();
-            }
-            else
-            {
-                InitRound();
-            }
-        }
-    }*/
-
-    /*
      * Transition to horizontal movement.
      * Called in Update() in MoveHandRotation.
      */
@@ -143,7 +127,7 @@ public class MoveHandManager : MonoBehaviour
             if (moveHandRotate)
             {
                 moveHandRotate.enabled = true;
-                moveHandRotate.targetPos = targetPosGunRotator + moveHandRotate.transform.parent.transform.position;//moveHandRotate.transform.position; // FIX THIS
+                moveHandRotate.targetPos = targetPosGunRotator + moveHandRotate.transform.parent.transform.position;
                 moveHandRotate.targetRot = new Vector3(-50, 0, 0);
             }
         }

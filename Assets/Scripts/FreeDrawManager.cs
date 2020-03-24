@@ -14,15 +14,8 @@ public class FreeDrawManager : GameManager
     protected override void DeactivateUI()
     {
         // Disable the text UI and white fade UI.
-        pauseText.enabled = false;
-        solidImg.color = new Color(1f, 1f, 1f, 1f);
-        gradientImg.color = new Color(1f, 1f, 1f, 0f);
-        StartCoroutine(SolidFadeLerp(new Color(1f, 1f, 1f, 0f), 1.5f));
-
-        finishedText.enabled = true;
-        screenshotButton.gameObject.SetActive(false);
-        exitButton.gameObject.SetActive(false);
-        unpauseButton.gameObject.SetActive(false);
+        base.DeactivateUI();
+        finishedText.GetComponent<Animator>().SetTrigger("Black");
     }
 
     /*
@@ -31,13 +24,14 @@ public class FreeDrawManager : GameManager
      */
     protected override void FinishTheDrawing()
     {
-        finishedText.enabled = false;
+        finishedText.GetComponent<Animator>().SetTrigger("Trans");
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         Camera.main.GetComponent<CameraFollow>().enabled = false;
         moveHandRotate.gameObject.SetActive(false);
+        finished = true;
         StartCoroutine(LerpCameraToPos(nextCameraTarget));
-        StartCoroutine(GradientFadeLerp(new Color(1f, 1f, 1f, 1f), .75f));
+        gradientImg.GetComponent<Animator>().SetTrigger("FullWhite");
         AudioManager.instance.PlayFinishedSound();
     }
 

@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     public bool cursorLocked = true;
 
     public bool levelTransition = false;
+    public bool paused = false;
+    public bool finished = false;
+    public bool finishedPressed = false;
 
     public Text pauseText;
     public Image solidImg;
@@ -68,22 +71,17 @@ public class GameManager : MonoBehaviour
     protected virtual void DeactivateUI()
     {
         // Disable the text UI and white fade UI.
-        pauseText.enabled = false;
-        solidImg.color = new Color(1f, 1f, 1f, 1f);
-        gradientImg.color = new Color(1f, 1f, 1f, 0f);
-        StartCoroutine(SolidFadeLerp(new Color(1f, 1f, 1f, 0f), 1.5f));
-
-        finishedText.enabled = false;
-        screenshotButton.gameObject.SetActive(false);
-        nextButton.gameObject.SetActive(false);
-        exitButton.gameObject.SetActive(false);
-        unpauseButton.gameObject.SetActive(false);
+        progressText.GetComponent<Animator>().SetTrigger("Black");
+        screenshotButton.GetComponent<Image>().raycastTarget = false; ;
+        nextButton.GetComponent<Image>().raycastTarget = false;
+        exitButton.GetComponent<Image>().raycastTarget = false; ;
+        unpauseButton.GetComponent<Image>().raycastTarget = false; ;
     }
 
     protected void Update()
     {
         // If the player presses the pause key, toggle the pause mode.
-        if (!levelTransition && Input.GetKeyDown(KeyCode.Escape) && !screenshotButton.gameObject.activeSelf)
+        if (!levelTransition && Input.GetKeyDown(KeyCode.Escape) && !finishedPressed)
         {
             cursorLocked = !cursorLocked;
             // Lock the cursor, restart time, get rid of the pause UI.
@@ -99,7 +97,7 @@ public class GameManager : MonoBehaviour
         }
 
         // If the finish game text prompt is enabled, check for the key press.
-        if (!levelTransition && finishedText.enabled && !unpauseButton.gameObject.activeSelf)
+        if (!levelTransition && finished && !paused)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -115,14 +113,15 @@ public class GameManager : MonoBehaviour
      */
     protected virtual void FinishTheDrawing()
     {
-        progressText.enabled = false;
-        finishedText.enabled = false;
+        progressText.GetComponent<Animator>().SetTrigger("Trans");
+        finishedText.GetComponent<Animator>().SetTrigger("Trans");
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         Camera.main.GetComponent<CameraFollow>().enabled = false;
         moveHandRotate.gameObject.SetActive(false);
+        finishedPressed = true;
         StartCoroutine(LerpCameraToPos(nextCameraTarget));
-        StartCoroutine(GradientFadeLerp(new Color(1f, 1f, 1f, .4f), .75f));
+        gradientImg.GetComponent<Animator>().SetTrigger("FullWhite");
         AudioManager.instance.PlayFinishedSound();
         curStencil.GetComponent<MeshRenderer>().enabled = false;
         curStencil.DeactivateChildren();
@@ -136,6 +135,8 @@ public class GameManager : MonoBehaviour
     {
         // Disable the finishedText UI, take a screenshot, and restart the game.
         GetComponent<Screenshot>().takeHiResShot = true;
+        nextButton.GetComponent<Animator>().SetTrigger("Trans");
+        nextButton.GetComponent<Image>().raycastTarget = false;
         // The last screenshot should quit the game.
         if (!level1To2 && (level2Transitions && level2Transitions.curStencil >= level2Transitions.stencils.Length))
             EndGame();
@@ -149,13 +150,18 @@ public class GameManager : MonoBehaviour
      */
     public void Next()
     {
-        screenshotButton.gameObject.SetActive(false);
-        nextButton.gameObject.SetActive(false);
+        levelTransition = true;
+        finishedPressed = false;
+        screenshotButton.GetComponent<Animator>().SetTrigger("Trans");
+        screenshotButton.GetComponent<Image>().raycastTarget = false;
+        nextButton.GetComponent<Animator>().SetTrigger("Trans");
+        nextButton.GetComponent<Image>().raycastTarget = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         if (!level1To2)
         {
             StartCoroutine(level2Transitions.NextStencil());
+            levelTransition = false;
         }
         else
         {
@@ -170,14 +176,16 @@ public class GameManager : MonoBehaviour
      */
     public void Unpause()
     {
+        paused = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         cursorLocked = true;
-        StartCoroutine(TimeLerp(1f));
-        StartCoroutine(SolidFadeLerp(new Color(1f, 1f, 1f, 0f), .75f));
-        pauseText.enabled = false;
-        exitButton.gameObject.SetActive(false);
-        unpauseButton.gameObject.SetActive(false);
+        solidImg.GetComponent<Animator>().SetTrigger("Trans");
+        pauseText.GetComponent<Animator>().SetTrigger("Trans");
+        exitButton.GetComponent<Animator>().SetTrigger("Trans");
+        nextButton.GetComponent<Image>().raycastTarget = false;
+        unpauseButton.GetComponent<Animator>().SetTrigger("Trans");
+        unpauseButton.GetComponent<Image>().raycastTarget = false;
     }
 
     /*
@@ -187,14 +195,17 @@ public class GameManager : MonoBehaviour
      */
     public void Pause()
     {
+        paused = true;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         cursorLocked = false;
-        StartCoroutine(TimeLerp(0f));
-        StartCoroutine(SolidFadeLerp(new Color(1f, 1f, 1f, .4f), .75f));
-        pauseText.enabled = true;
-        exitButton.gameObject.SetActive(true);
-        unpauseButton.gameObject.SetActive(true);
+        solidImg.GetComponent<Animator>().SetTrigger("HalfWhite");
+        pauseText.GetComponent<Animator>().SetTrigger("Black");
+        exitButton.GetComponent<Animator>().SetTrigger("Black");
+        exitButton.GetComponent<Image>().raycastTarget = true;
+        unpauseButton.GetComponent<Animator>().SetTrigger("Black");
+        unpauseButton.GetComponent<Image>().raycastTarget = true;
+        solidImg.GetComponent<Animator>().SetTrigger("HalfWhite");
     }
 
     /*
@@ -213,16 +224,21 @@ public class GameManager : MonoBehaviour
      */
     private IEnumerator MainMenuFadeCO()
     {
-        StartCoroutine(SolidFadeLerp(Color.white, 1f));
-        pauseText.enabled = false;
-        finishedText.enabled = false;
-        screenshotButton.gameObject.SetActive(false);
-        exitButton.gameObject.SetActive(false);
-        unpauseButton.gameObject.SetActive(false);
+        solidImg.GetComponent<Animator>().SetTrigger("FullWhite");
+        pauseText.GetComponent<Animator>().SetTrigger("Trans");
+        finishedText.GetComponent<Animator>().SetTrigger("Trans");
+        screenshotButton.GetComponent<Animator>().SetTrigger("Trans");
+        screenshotButton.GetComponent<Image>().raycastTarget = false;
+        nextButton.GetComponent<Animator>().SetTrigger("Trans");
+        nextButton.GetComponent<Image>().raycastTarget = false;
+        exitButton.GetComponent<Animator>().SetTrigger("Trans");
+        screenshotButton.GetComponent<Image>().raycastTarget = false;
+        unpauseButton.GetComponent<Animator>().SetTrigger("Trans");
+        screenshotButton.GetComponent<Image>().raycastTarget = false;
         if (finishedText)
-            finishedText.enabled = false;
+            finishedText.GetComponent<Animator>().SetTrigger("Trans");
         if (progressText)
-            progressText.enabled = false;
+            progressText.GetComponent<Animator>().SetTrigger("Trans");
         Time.timeScale = 1f;
         yield return new WaitForSeconds(1f);
         Debug.Log("Transitioning now");
@@ -257,71 +273,9 @@ public class GameManager : MonoBehaviour
      */
     public void StencilFinished(GameObject newCameraTarget)
     {
-        finishedText.enabled = true;
+        finishedText.GetComponent<Animator>().SetTrigger("Black");
+        finished = true;
         nextCameraTarget = newCameraTarget;
-    }
-
-
-    /*
-     * Lerp time to desired timescale.
-     * The timescale is smoothly reset based on:
-     * The fraction of how much time has passed since the start of the Lerp
-     * Divided by the total duration of the Lerp.
-     * Invoked by Update.
-     * targetTimeScale: the target timescale that will be achieved at the end of the lerp.
-     */
-    private IEnumerator TimeLerp(float targetTimeScale)
-    {
-        float duration = .75f;
-        float elapsedTime = 0f;
-        float startTimeScale = Time.timeScale;
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            Time.timeScale = Mathf.SmoothStep(startTimeScale, targetTimeScale, (elapsedTime / duration));
-            yield return null;
-        }
-        Time.timeScale = targetTimeScale;
-    }
-
-    /*
-     * Lerp the solid white image to desired opacity.
-     * The image is smoothly faded in based on:
-     * The fraction of how much time has passed since the start of the Lerp
-     * Divided by the total duration of the Lerp.
-     * Invoked by Update.
-     * targetTimeScale: the target timescale that will be achieved at the end of the lerp.
-     */
-    public IEnumerator SolidFadeLerp(Color targetColor, float duration)
-    {
-        float elapsedTime = 0f;
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            solidImg.color = Color.Lerp(solidImg.color, targetColor, (elapsedTime / duration));
-            yield return null;
-        }
-        solidImg.color = targetColor;
-    }
-
-    /*
-     * Lerp a white gradient image to desired opacity.
-     * The image is smoothly faded in based on:
-     * The fraction of how much time has passed since the start of the Lerp
-     * Divided by the total duration of the Lerp.
-     * Invoked by Update.
-     * targetTimeScale: the target timescale that will be achieved at the end of the lerp.
-     */
-    public IEnumerator GradientFadeLerp(Color targetColor, float duration)
-    {
-        float elapsedTime = 0f;
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-            gradientImg.color = Color.Lerp(gradientImg.color, targetColor, (elapsedTime / duration));
-            yield return null;
-        }
-        gradientImg.color = targetColor;
     }
 
     /*
@@ -348,16 +302,23 @@ public class GameManager : MonoBehaviour
         Camera.main.transform.position = cameraPos.transform.position;
         Camera.main.transform.rotation = cameraPos.transform.rotation;
 
+        levelTransition = false;
+        finished = false;
+        finishedText.GetComponent<Animator>().SetTrigger("Trans");
         //Screenshot and "next" buttons should appear only if this is not the end of the game.
         if (level1To2 || (level2Transitions && level2Transitions.curStencil < level2Transitions.stencils.Length))
         {
-            screenshotButton.gameObject.SetActive(true);
-            nextButton.gameObject.SetActive(true);
+            screenshotButton.GetComponent<Animator>().SetTrigger("Black");
+            screenshotButton.GetComponent<Image>().raycastTarget = true;
+            nextButton.GetComponent<Animator>().SetTrigger("Black");
+            nextButton.GetComponent<Image>().raycastTarget = true;
         }
         else if (GetComponent<FreeDrawManager>())
         {
-            screenshotButton.gameObject.SetActive(true);
-            exitButton.gameObject.SetActive(true);
+            screenshotButton.GetComponent<Animator>().SetTrigger("Black");
+            screenshotButton.GetComponent<Image>().raycastTarget = true;
+            exitButton.GetComponent<Animator>().SetTrigger("Black");
+            exitButton.GetComponent<Image>().raycastTarget = true;
         }
     }
 

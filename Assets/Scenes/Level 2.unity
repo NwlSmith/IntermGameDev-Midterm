@@ -3575,7 +3575,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125383200}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1b4ac317181fa8146a7cfdb39d24be67, type: 2}
   m_CullingMode: 0
@@ -4565,7 +4565,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 10.00001, y: 0.000015258789}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &149217905
 MonoBehaviour:
@@ -10195,7 +10195,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378405006}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1b4ac317181fa8146a7cfdb39d24be67, type: 2}
   m_CullingMode: 0
@@ -10401,7 +10401,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386318366}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1b4ac317181fa8146a7cfdb39d24be67, type: 2}
   m_CullingMode: 0
@@ -36553,6 +36553,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursorLocked: 1
   levelTransition: 0
+  paused: 0
+  finished: 0
   pauseText: {fileID: 1875858907}
   solidImg: {fileID: 1891133290}
   gradientImg: {fileID: 1825531951}
@@ -40913,7 +40915,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1556905451}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1b4ac317181fa8146a7cfdb39d24be67, type: 2}
   m_CullingMode: 0
@@ -50763,7 +50765,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976753884}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1b4ac317181fa8146a7cfdb39d24be67, type: 2}
   m_CullingMode: 0
@@ -53546,7 +53548,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -10, y: -0.0000005868769}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &2091939279
 MonoBehaviour:
