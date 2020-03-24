@@ -156,6 +156,10 @@ NEXT STEPS:
 
 - Bug: stencil clips with ink
 
+- Update comments?
+
+- Fix Mac Build
+
 - Feature: Press button to hide the hint colliders
 
 - Feature: Write pseudo-artsy vague stuff between scenes like "THERE IS NO ERASE" etc.
