@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour
         solidImg.GetComponent<Animator>().SetTrigger("Trans");
         pauseText.GetComponent<Animator>().SetTrigger("Trans");
         exitButton.GetComponent<Animator>().SetTrigger("Trans");
-        nextButton.GetComponent<Image>().raycastTarget = false;
+        exitButton.GetComponent<Image>().raycastTarget = false;
         unpauseButton.GetComponent<Animator>().SetTrigger("Trans");
         unpauseButton.GetComponent<Image>().raycastTarget = false;
     }
